@@ -105,3 +105,10 @@ import { listArticle } from "@/api/board.js";
     },
   }
 </script>
+
+<style scoped>
+.el-table--enable-row-hover  .el-table__body  tr :hover > td {
+   background-color : grey ;
+}
+
+</style>

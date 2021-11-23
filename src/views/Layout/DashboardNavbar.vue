@@ -4,7 +4,7 @@
     class="navbar-top navbar-expand"
     :class="{'navbar-dark': type === 'default'}"
   >
-    <a href="#" aria-current="page" class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"> {{$route.name}} </a>
+    <!-- <a href="#" aria-current="page" class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"> {{$route.name}} </a> -->
     <!-- Navbar links -->
     <b-navbar-nav class="align-items-center ml-md-auto">
       <!-- This item dont have <b-nav-item> because item have data-action/data-target on tag <a>, wich we cant add -->
@@ -38,8 +38,8 @@
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="img/theme/team-4.jpg">
                   </span>
-            <b-media-body class="ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+            <b-media-body class="ml-2 d-none d-lg-block" v-if="userInfo != null">
+              <span class="mb-0 text-sm  font-weight-bold">{{userInfo.userid}}님 환영합니다.</span>
             </b-media-body>
           </b-media>
         </a>
@@ -79,6 +79,8 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions';
 import { BaseNav, Modal } from '@/components';
+import { mapState } from "vuex";
+const memberStore = "memberStore";
 
 export default {
   components: {
@@ -94,6 +96,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(memberStore, ["userInfo"]),
     routeName() {
       const { name } = this.$route;
       return this.capitalizeFirstLetter(name);

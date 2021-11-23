@@ -46,7 +46,7 @@
         </sidebar-item>
 
         <!-- <sidebar-item v-if="isLogin" @click="onClickLogout" value="Logout" icon='ni ni-key-25 text-info'/> -->
-        <sidebar-item v-if="isLogin" @click="onClickLogout"
+        <sidebar-item v-if="isLogin"
                   :link="{
                     name: 'Logout',
                     path: '/logout',

@@ -93,6 +93,8 @@ const houseStore = {
           console.log(error);
         }
       );
+    },
+    getSidoName: ({ commit }, sidoCode) => {
       sidoname(
         { sidoCode: sidoCode },
         ({ data }) => {
@@ -142,6 +144,8 @@ const houseStore = {
           console.log(error);
         }
       );
+    },
+    getGugunName: ({ commit }, gugunCode) => {
       gugunname(
         { gugunCode: gugunCode },
         ({ data }) => {

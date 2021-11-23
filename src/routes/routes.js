@@ -20,6 +20,8 @@ import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardView from "@/components/board/BoardView.vue";
 import BoardUpdate from "@/components/board/BoardUpdate.vue";
 
+import KakaoMap from "@/components/map/KakaoMap.vue";
+
 import House from "@/views/House.vue";
 import store from "@/store/index.js";
 import memberStore from "@/store/modules/memberStore.js";
@@ -185,7 +187,7 @@ const routes = [
       {
         path: '/maps',
         name: 'maps',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/GoogleMaps.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/KakaoMaps.vue')
       },
       {
         path: '/tables',
