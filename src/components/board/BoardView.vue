@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     listArticle() {
-      this.$router.push({ name: "BoardList" });
+      this.$router.push({ name: "tables" });
     },
     // listComment() {
     //   this.$router.push({ name: "CommentList" });
@@ -134,7 +134,7 @@ export default {
     removeArticle() {
       if (confirm("정말로 삭제?")) {
         deleteArticle(this.article.articleno, () => {
-          this.$router.push({ name: "BoardList" });
+          this.$router.push({ name: "tables" });
         });
       }
     },

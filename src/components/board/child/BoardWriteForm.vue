@@ -64,7 +64,7 @@
         <b-button type="submit" variant="primary" class="m-1" v-else
           >글수정</b-button
         >
-        <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
+        <b-button @click="moveList" variant="danger" class="m-1">취소</b-button>
       </b-form>
     </b-col>
   </b-row>
@@ -181,7 +181,7 @@ export default {
           }
           alert(msg);
           // 현재 route를 /list로 변경.
-          this.$router.push({ name: "BoardList" });
+          this.$router.push({ name: "tables" });
         },
         (error) => {
           console.log(error);
@@ -189,7 +189,7 @@ export default {
       );
     },
     moveList() {
-      this.$router.push({ name: "BoardList" });
+      this.$router.push({ name: "tables" });
     },
     computed: {
       ...mapState(memberStore, ["isLogin", "userInfo"]),

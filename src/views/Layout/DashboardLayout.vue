@@ -31,7 +31,7 @@
 
         <sidebar-item
                 :link="{
-                  name: '게시판',
+                  name: '정보 공유방',
                   path: '/tables',
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">

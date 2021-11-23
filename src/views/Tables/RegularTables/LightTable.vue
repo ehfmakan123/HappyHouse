@@ -1,19 +1,24 @@
 <template>
     <b-card no-body>
         <b-card-header class="border-0">
-            <h3 class="mb-0">게시판</h3>
+            <h3 class="mb-0">정보 공유방</h3>
+        </b-card-header>
+        <b-card-header class="border-0">
+            <h5 class="mb-0">전체 글 수 : {{ totalRows }}</h5>
         </b-card-header>
 
         <el-table class="table-responsive table"
                   header-row-class-name="thead-light"
-                  :data="articles">
+                  :data="articles"
+                  @row-click="rowClicked">
             <el-table-column label="글번호"
                              min-width="140px"
                              prop="articleno">
             </el-table-column>
             <el-table-column label="제목"
                              prop="subject"
-                             min-width="310px">
+                             min-width="310px"
+                             >
             </el-table-column>
 
             <el-table-column label="조회수"
@@ -29,8 +34,9 @@
                              min-width="240px">
             </el-table-column>
         </el-table>
+        <b-button variant="light" @click="moveWrite()">게시글 작성</b-button>
 
-        <b-card-footer align="center" class="py-4 justify-content-end">
+        <b-card-footer class="py-4 justify-content-end">
             <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -92,6 +98,10 @@ import { listArticle } from "@/api/board.js";
                 }
             );
         },
+        rowClicked(row) {
+          console.log(row.articleno);
+          this.$router.push({ name: 'BoardView', params: { articleno: row.articleno } });
+        }
     },
   }
 </script>

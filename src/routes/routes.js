@@ -34,9 +34,9 @@ const onlyAuthUser = async (to, from, next) => {
     await getUserInfo(token);
   }
   if (checkUserInfo === null) {
-    alert("로그인이 필요한 페이지입니다..");
+    alert("회원만 이용 가능합니다 :)");
     // next({ name: "SignIn" });
-    router.push({ name: "SignIn" });
+    router.push({ name: "login" });
   } else {
     console.log("로그인 했다.");
     next();
