@@ -30,7 +30,7 @@
             </el-table-column>
         </el-table>
 
-        <b-card-footer align="center" class="py-4 d-flex justify-content-end">
+        <b-card-footer align="center" class="py-4 justify-content-end">
             <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
