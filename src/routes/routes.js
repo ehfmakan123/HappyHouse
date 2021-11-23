@@ -1,0 +1,217 @@
+import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
+import AuthLayout from '@/views/Pages/AuthLayout.vue';
+
+import NotFound from '@/views/NotFoundPage.vue';
+import Home from "@/views/Home.vue";
+import Instargram from "@/views/Instargram.vue";
+
+import Member from "@/views/Member.vue";
+import MemberLogin from "@/components/user/MemberLogin.vue";
+import MemberJoin from "@/components/user/MemberJoin.vue";
+import MemberMyPage from "@/components/user/MemberMyPage.vue";
+import MemberList from "@/components/user/MemberList.vue";
+import MemberUpdate from "@/components/user/MemberUpdate.vue";
+import MemberModify from "@/components/user/MemberModify.vue";
+import MemberView from "@/components/user/MemberView.vue";
+
+import Board from "@/views/Board.vue";
+import BoardList from "@/components/board/BoardList.vue";
+import BoardWrite from "@/components/board/BoardWrite.vue";
+import BoardView from "@/components/board/BoardView.vue";
+import BoardUpdate from "@/components/board/BoardUpdate.vue";
+
+import House from "@/views/House.vue";
+import store from "@/store/index.js";
+import memberStore from "@/store/modules/memberStore.js";
+
+// https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
+const onlyAuthUser = async (to, from, next) => {
+  // console.log(store);
+  const checkUserInfo = store.getters["memberStore/checkUserInfo"];
+  const getUserInfo = store._actions["memberStore/getUserInfo"];
+  let token = sessionStorage.getItem("access-token");
+  if (checkUserInfo == null && token) {
+    await getUserInfo(token);
+  }
+  if (checkUserInfo === null) {
+    alert("로그인이 필요한 페이지입니다..");
+    // next({ name: "SignIn" });
+    router.push({ name: "SignIn" });
+  } else {
+    console.log("로그인 했다.");
+    next();
+  }
+};
+
+const onClickLogout = async (to, from, next) => {
+  // memberStore.mutations.SET_IS_LOGIN(memberStore.state, false);
+  // memberStore.mutations.SET_USER_INFO(memberStore.state, null);
+  // store.mutations["memberStore/SET_IS_LOGIN(false)"];
+  // store.mutations["memberStore/SET_USER_INFO(null)"];
+  // this.SET_IS_LOGIN(false);
+  // this.SET_USER_INFO(null);
+  sessionStorage.removeItem("access-token");
+  next();
+  // if (this.$route.path != "/dashboard") this.$router.push({ name: "dashboard" });
+};
+
+const routes = [
+  // {
+  //   path: "/",
+  //   name: "Home",
+  //   component: Home,
+  // },
+  // {
+  //   path: "/instargram",
+  //   name: "Instargram",
+  //   component: Instargram,
+  // },
+  {
+    path: "/logout",
+    name: "Logout",
+    beforeEnter: onClickLogout,
+    component: DashboardLayout,
+  },
+  {
+    path: "/user",
+    name: "Member",
+    component: Member,
+
+    children: [
+      {
+        path: "singin",
+        name: "SignIn",
+        component: MemberLogin,
+      },
+      {
+        path: "singup",
+        name: "SignUp",
+        component: MemberJoin,
+      },
+      {
+        path: "mypage",
+        name: "MyPage",
+        beforeEnter: onlyAuthUser,
+        component: MemberMyPage,
+      },
+      {
+        path: "list",
+        name: "MemberList",
+        component: MemberList,
+      },
+      {
+        path: "update/:userid",
+        name: "MemberUpdate",
+        beforeEnter: onlyAuthUser,
+        component: MemberUpdate,
+      },
+      {
+        path: "update/:userid",
+        name: "MemberModify",
+        beforeEnter: onlyAuthUser,
+        component: MemberModify,
+      },
+      {
+        path: "detail/:userid",
+        name: "MemberView",
+        beforeEnter: onlyAuthUser,
+        component: MemberView,
+      },
+    ],
+  },
+  {
+    path: "/board",
+    name: "Board",
+    component: Board,
+    redirect: "/board/list",
+    children: [
+      {
+        path: "list",
+        name: "BoardList",
+        component: BoardList,
+      },
+      {
+        path: "write",
+        name: "BoardWrite",
+        beforeEnter: onlyAuthUser,
+        component: BoardWrite,
+      },
+      {
+        path: "detail/:articleno",
+        name: "BoardView",
+        beforeEnter: onlyAuthUser,
+        component: BoardView,
+      },
+      {
+        path: "update/:articleno",
+        name: "BoardUpdate",
+        beforeEnter: onlyAuthUser,
+        component: BoardUpdate,
+      },
+    ],
+  },
+  {
+    path: "/house",
+    name: "House",
+    component: House,
+  },
+  {
+    path: "*",
+    redirect: "/",
+  },
+  {
+    path: '/',
+    redirect: 'dashboard',
+    component: DashboardLayout,
+    children: [
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Dashboard.vue')
+      },
+      {
+        path: '/icons',
+        name: 'icons',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Icons.vue')
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/UserProfile.vue')
+      },
+      {
+        path: '/maps',
+        name: 'maps',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/GoogleMaps.vue')
+      },
+      {
+        path: '/tables',
+        name: 'tables',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/RegularTables.vue')
+      }
+    ]
+  },
+  {
+    path: '/',
+    redirect: 'login',
+    component: AuthLayout,
+    children: [
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
+      },
+      { path: '*', component: NotFound }
+    ]
+  }
+];
+
+export default routes;
