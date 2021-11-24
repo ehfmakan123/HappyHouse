@@ -127,6 +127,7 @@ const houseStore = {
         LAWD_CD: gugunCode,
         DEAL_YMD: "202110",
         serviceKey: decodeURIComponent(SERVICE_KEY),
+        numOfRows: 1000,
       };
       houseList(
         params,
