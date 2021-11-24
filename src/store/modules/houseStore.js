@@ -59,12 +59,6 @@ const houseStore = {
     SET_GUGUN: (state, gugun) => {
       state.gugun = gugun;
     },
-    GET_SIDO: (state) => {
-      return state.sido;
-    },
-    GET_GUGUN: (state) => {
-      return state.gugun;
-    },
   },
 
   actions: {

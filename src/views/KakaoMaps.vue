@@ -62,8 +62,8 @@ export default {
       map: null,
       markers: [],
       infowindow: null,
-      sido: null,
-      gugun: null,
+      // sido: null,
+      // gugun: null,
       markerImageSrc:
         "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png", // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
       coffeeMarkers: [], // 커피숍 마커 객체를 가지고 있을 배열입니다
@@ -72,7 +72,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses", "sidos", "guguns"]),
+    ...mapState(houseStore, ["houses", "sidos", "guguns", "sido", "gugun"]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -167,20 +167,21 @@ export default {
       this.$store.commit("houseStore/SET_DETAIL_HOUSE", null, { root: true });
       if (this.gugunCode) {
         this.getHouseList(this.gugunCode);
-        this.gugun(this.gugunCode);
-        gugunname(
-          {gugunCode:this.gugunCode},
-          ({ data }) => {
-            this.$store.commit("houseStore/SET_GUGUN", data, { root: true });
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+        this.getGugunName(this.gugunCode);
+        // gugunname(
+        //   {gugunCode:this.gugunCode},
+        //   ({ data }) => {
+        //     this.$store.commit("houseStore/SET_GUGUN", data, { root: true });
+        //   },
+        //   (error) => {
+        //     console.log(error);
+        //   }
+        // );
       }
       console.log(this.houses);
     },
     initMap() {
+      console.log('initMap');
       const container = document.getElementById("map-custom");
       // container.style.width = `90%`;
       // container.style.height = `500px`;
