@@ -8,9 +8,9 @@
       expand="lg"
     >
       <div slot="brand" class="navbar-wrapper">
-        <b-navbar-brand to="/">
-          <img src="img/brand/white.png">
-        </b-navbar-brand>
+        <!-- <b-navbar-brand to="/">
+          <img src="img/brand/green.png">
+        </b-navbar-brand> -->
       </div>
 
      <template>
@@ -32,7 +32,7 @@
          <b-navbar-nav  class="align-items-lg-center ml-lg-auto">
            <b-nav-item to="/dashboard">
                <i class="ni ni-planet"></i>
-               <span class="nav-link-inner--text">Dashboard</span>
+               <span class="nav-link-inner--text">Home</span>
            </b-nav-item>
            <b-nav-item to="/register">
                <i class="ni ni-circle-08"></i>
@@ -41,10 +41,6 @@
            <b-nav-item to="/login">
                <i class="ni ni-key-25"></i>
                <span class="nav-link-inner--text">Login</span>
-           </b-nav-item>
-           <b-nav-item to="/profile">
-               <i class="ni ni-single-02"></i>
-               <span class="nav-link-inner--text">Profile</span>
            </b-nav-item>
        </b-navbar-nav>
      </template>
