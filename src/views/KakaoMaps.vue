@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     
-      <base-header class="bg-image pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
+      <base-header class="bg-image pb-6 pb-8 pt-5 pt-md-8">
         <!-- Card stats -->
 
         <b-row class="mt-4 mb-4 text-center">
@@ -22,12 +22,14 @@
             <b-form-select
               v-model="sidoCode"
               :options="sidos"
+              @change="gugunList"
             ></b-form-select>
           </b-col>
           <b-col class="sm-3">
             <b-form-select
               v-model="gugunCode"
               :options="guguns"
+              @change="aptList"
             ></b-form-select>
           </b-col>
         </b-row>
@@ -58,8 +60,8 @@ export default {
       map: null,
       markers: [],
       infowindow: null,
-      // sido: null,
-      // gugun: null,
+      sido: null,
+      gugun: null,
       markerImageSrc:
         "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png", // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
       coffeeMarkers: [], // 커피숍 마커 객체를 가지고 있을 배열입니다
@@ -68,10 +70,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns"]),
-    ...mapState(houseStore, ["sido"]),
-    ...mapState(houseStore, ["gugun"]),
-    ...mapState(houseStore, ["houses"]),
+    ...mapState(houseStore, ["sidos", "guguns", "sido", "gugun", "houses"]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -79,11 +78,12 @@ export default {
   created() {
     // this.$store.dispatch("getSido");
     // this.sidoList();
-    this.CLEAR_SIDO_LIST();
     this.$store.commit("houseStore/SET_HOUSE_LIST", [], { root: true });
     this.$store.commit("houseStore/SET_DETAIL_HOUSE", null, { root: true });
     // this.$store.commit("houseStore/SET_SIDO", null, { root: true });
+    this.CLEAR_SIDO_LIST();
     this.getSido();
+    console.log(this.sidos, "sidos");
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -153,7 +153,8 @@ export default {
           console.log(error);
         }
       );
-      console.log(this.sido);
+      // this.sido = val;
+      console.log(this.sido, 'sido');
     },
     // this.sido(this.sidoCode);
   },
@@ -369,7 +370,7 @@ export default {
   height: 100%;
   text-align: center;
   position: relative;
-  z-index: -1;
+  z-index: 0;
 }
 
 .bg-image::after {

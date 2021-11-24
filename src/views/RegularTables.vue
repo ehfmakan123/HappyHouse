@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <base-header class="bg-image pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
+  <div id="app">
+    <div class="bg-image pb-6 pb-8 pt-5 pt-md-8">
       <!-- Card stats -->
-    </base-header>
+    </div>
     <b-container fluid class="mt--7">
       <b-row>
         <b-col>
@@ -24,15 +24,13 @@
 </template>
 <script>
   import { Dropdown, DropdownItem, DropdownMenu, Table, TableColumn } from 'element-ui';
-  import projects from './Tables/projects'
-  import users from './Tables/users'
   import LightTable from "./Tables/RegularTables/LightTable";
-  import DarkTable from "./Tables/RegularTables/DarkTable";
+  // import DarkTable from "./Tables/RegularTables/DarkTable";
 
   export default {
     components: {
       LightTable,
-      DarkTable,
+      // DarkTable,
       [Dropdown.name]: Dropdown,
       [DropdownItem.name]: DropdownItem,
       [DropdownMenu.name]: DropdownMenu,
@@ -41,46 +39,34 @@
     },
     data() {
       return {
-        projects,
-        users
       };
     }
   };
 </script>
 <style>
-.el-table.table-dark{
-  background-color: #172b4d;
-  color: #f8f9fe;
-}
-
-.el-table.table-dark th,
-.el-table.table-dark tr{
-  background-color: #172b4d;
-}
-
-.el-table.table-dark td,
-.el-table.table-dark th.is-leaf{
-  border-bottom: none;
+.el-table tr :hover {
+  cursor:pointer;
+  /* background-color: lightblue; */
 }
 .bg-image {
   width: 100%;
   height: 100%;
   text-align: center;
   position: relative;
-  z-index: -1;
+  z-index: 0;
 }
 
 .bg-image::after {
   width: 100%;
   height: 100%;
   content: "";
-  background-image: url("/assets/house.png");
+  background-image: url("/assets/bg2.jpg");
   position: absolute;
   opacity: 0.7;
   top: 0;
   left: 0;
   z-index: -1;
-  min-height: 500px;
+  /* min-height: 500px; */
   background-size: cover; 
   background-position: center top;
 }
