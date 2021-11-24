@@ -1,65 +1,61 @@
 <template>
   <div>
 
-    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
-      <!-- Card stats -->
-      <b-row>
-        <b-col xl="3" md="6">
-          <stats-card title="Total traffic"
-                      type="gradient-red"
-                      sub-title="350,897"
-                      icon="ni ni-active-40"
-                      class="mb-4">
+    <!-- <base-header class="bg-image pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
+      Card stats
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </base-header> -->
+    <b-carousel
+      id="carousel-1"
+      v-model="slide"
+      :interval="4000"
+      controls
+      indicators
+      background="#ababab"
+      img-width="1024"
+      img-height="480"
+      style="text-shadow: 1px 1px 2px #333;"
+      @sliding-start="onSlideStart"
+      @sliding-end="onSlideEnd"
+    >
+      <!-- Text slides with image -->
+      <b-carousel-slide
+        caption="First slide"
+        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+        img-src="https://picsum.photos/1024/480/?image=52"
+      ></b-carousel-slide>
 
-            <template slot="footer">
-              <span class="text-success mr-2">3.48%</span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </b-col>
-        <b-col xl="3" md="6">
-          <stats-card title="Total traffic"
-                      type="gradient-orange"
-                      sub-title="2,356"
-                      icon="ni ni-chart-pie-35"
-                      class="mb-4">
+      <!-- Slides with custom text -->
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
+        <h1>Hello world!</h1>
+      </b-carousel-slide>
 
-            <template slot="footer">
-              <span class="text-success mr-2">12.18%</span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </b-col>
-        <b-col xl="3" md="6">
-          <stats-card title="Sales"
-                      type="gradient-green"
-                      sub-title="924"
-                      icon="ni ni-money-coins"
-                      class="mb-4">
+      <!-- Slides with image only -->
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
 
-            <template slot="footer">
-              <span class="text-danger mr-2">5.72%</span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
+      <!-- Slides with img slot -->
+      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
+      <b-carousel-slide>
+        <template #img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1024"
+            height="480"
+            src="https://picsum.photos/1024/480/?image=55"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide>
 
-        </b-col>
-        <b-col xl="3" md="6">
-          <stats-card title="Performance"
-                      type="gradient-info"
-                      sub-title="49,65%"
-                      icon="ni ni-chart-bar-32"
-                      class="mb-4">
-
-            <template slot="footer">
-              <span class="text-success mr-2">54.8%</span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </b-col>
-      </b-row>
-    </base-header>
-
+      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
+      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
+          a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
+        </p>
+      </b-carousel-slide>
+    </b-carousel>
+    <br/><br/><br/><br/><br/><br/>
     <!--Charts-->
     <b-container fluid class="mt--7">
       <b-row>
@@ -214,4 +210,29 @@
   padding-left: 0px;
   padding-right: 0px;
 }
+.bg-image {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  z-index: -1;
+}
+
+.bg-image::after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-image: url("/assets/house.png");
+  position: absolute;
+  /* opacity: 0.7; */
+  top: 0;
+  left: 0;
+  z-index: -1;
+  min-height: 400px;
+  background-size: cover; 
+  background-position: center top;
+}
+
+</style>
+
 </style>

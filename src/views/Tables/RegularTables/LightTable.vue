@@ -1,8 +1,8 @@
 <template>
     <b-card no-body>
-        <b-card-header class="border-0">
+        <!-- <b-card-header class="border-0">
             <h3 class="mb-0">정보 공유방</h3>
-        </b-card-header>
+        </b-card-header> -->
         <b-card-header class="border-0">
             <h5 class="mb-0">전체 글 수 : {{ totalRows }}</h5>
         </b-card-header>
@@ -34,7 +34,7 @@
                              min-width="240px">
             </el-table-column>
         </el-table>
-        <b-button variant="light" @click="moveWrite()">게시글 작성</b-button>
+        <b-button @click="moveWrite()">게시글 작성</b-button>
 
         <b-card-footer class="py-4 justify-content-end">
             <b-pagination

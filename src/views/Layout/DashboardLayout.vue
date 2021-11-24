@@ -31,13 +31,13 @@
 
         <sidebar-item
                 :link="{
-                  name: '정보 공유방',
+                  name: '게시판',
                   path: '/tables',
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
         </sidebar-item>
 
-        <sidebar-item v-if="isLogin"
+        <sidebar-item v-if="userInfo != null"
               :link="{
                 name: 'My Page',
                 path: '/profile',
@@ -46,13 +46,7 @@
         </sidebar-item>
 
         <!-- <sidebar-item v-if="isLogin" @click="onClickLogout" value="Logout" icon='ni ni-key-25 text-info'/> -->
-        <sidebar-item v-if="isLogin"
-                  :link="{
-                    name: 'Logout',
-                    path: '/',
-                    icon: 'ni ni-key-25 text-info'
-                  }">
-        </sidebar-item>
+        <b-nav-item v-if="userInfo != null" @click="setLogout" href="#" icon="ni ni-key-25 text-info"><b-icon icon="unlock-fill"></b-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</b-nav-item>
         <sidebar-item v-else
                   :link="{
                     name: 'Login',
@@ -60,7 +54,7 @@
                     icon: 'ni ni-key-25 text-info'
                   }">
         </sidebar-item>
-        <sidebar-item v-if="!isLogin"
+        <sidebar-item v-if="userInfo == null"
                   :link="{
                     name: 'Register',
                     path: '/register',
@@ -151,15 +145,17 @@
     methods: {
       ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
       setLogout() {
-        this.isLogin = false;
-        this.SET_IS_LOGIN(false);
-        this.SET_USER_INFO(null);
+        if (confirm("로그아웃 하시겠습니까?")) {
+          this.isLogin = false;
+          this.SET_IS_LOGIN(false);
+          this.SET_USER_INFO(null);
+          sessionStorage.removeItem("access-token");
+        }
       },
       // onClickLogout() {
       //   this.isLogin = false;
       //   this.SET_IS_LOGIN(false);
       //   this.SET_USER_INFO(null);
-      //   sessionStorage.removeItem("access-token");
       //   if (this.$route.path != "/dashboard") this.$router.push({ name: "dashboard" });
       // },
       initScrollbar() {

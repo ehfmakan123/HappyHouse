@@ -2,8 +2,6 @@ import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
 import AuthLayout from '@/views/Pages/AuthLayout.vue';
 
 import NotFound from '@/views/NotFoundPage.vue';
-import Home from "@/views/Home.vue";
-import Instargram from "@/views/Instargram.vue";
 
 import Member from "@/views/Member.vue";
 import MemberLogin from "@/components/user/MemberLogin.vue";
@@ -20,11 +18,7 @@ import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardView from "@/components/board/BoardView.vue";
 import BoardUpdate from "@/components/board/BoardUpdate.vue";
 
-import KakaoMap from "@/components/map/KakaoMap.vue";
-
-import House from "@/views/House.vue";
 import store from "@/store/index.js";
-import memberStore from "@/store/modules/memberStore.js";
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const onlyAuthUser = async (to, from, next) => {
@@ -45,35 +39,7 @@ const onlyAuthUser = async (to, from, next) => {
   }
 };
 
-const onClickLogout = async (to, from, next) => {
-  // memberStore.mutations.SET_IS_LOGIN(memberStore.state, false);
-  // memberStore.mutations.SET_USER_INFO(memberStore.state, null);
-  // store.mutations["memberStore/SET_IS_LOGIN(false)"];
-  // store.mutations["memberStore/SET_USER_INFO(null)"];
-  // this.SET_IS_LOGIN(false);
-  // this.SET_USER_INFO(null);
-  sessionStorage.removeItem("access-token");
-  next();
-  // if (this.$route.path != "/dashboard") this.$router.push({ name: "dashboard" });
-};
-
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "Home",
-  //   component: Home,
-  // },
-  // {
-  //   path: "/instargram",
-  //   name: "Instargram",
-  //   component: Instargram,
-  // },
-  
-  {
-    path: "/house",
-    name: "House",
-    component: House,
-  },
   {
     path: "*",
     redirect: "/",
