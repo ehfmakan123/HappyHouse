@@ -45,6 +45,14 @@
                 }">
         </sidebar-item>
 
+        <sidebar-item v-if="userInfo != null"
+              :link="{
+                name: 'Subscribe',
+                path: '/subscribe',
+                icon: 'ni ni-favourite-28 text-pink'
+                }">
+        </sidebar-item>
+
         <!-- <sidebar-item v-if="isLogin" @click="onClickLogout" value="Logout" icon='ni ni-key-25 text-info'/> -->
         <b-nav-item v-if="userInfo != null" @click="setLogout" href="#" icon="ni ni-key-25 text-info"><b-icon icon="unlock-fill"></b-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</b-nav-item>
         <sidebar-item v-else

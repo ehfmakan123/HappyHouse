@@ -78,6 +78,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/RegularTables.vue')
       },
       {
+        path: '/subscribe',
+        name: 'subscribe',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/ContactForm.vue')
+      },
+      {
         path: "/board",
         name: "Board",
         component: Board,
