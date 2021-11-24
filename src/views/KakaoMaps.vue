@@ -71,8 +71,24 @@
             </template>
           </stats-card>
         </b-col> -->
-        <b-col><div id="roadview" style="width: 100%; height: 300px"></div></b-col>
-        <b-col></b-col>
+        <b-col><div id="roadview" style="width: 100%; height: 480px"></div></b-col>
+        <b-col xl="5" v-if="house != null && housechart.length > 1">
+          <card type="default" header-classes="bg-transparent">
+            <b-row align-v="center" slot="header">
+              <b-col>
+                <h5 class="text-light text-uppercase ls-1 mb-1">거래가 변화 추이</h5>
+                <h5 id="aptname" class="h3 text-white mb-0">{{house.아파트}}</h5>
+              </b-col>
+            </b-row>
+            <line-chart
+              :height="350"
+              ref="bigChart"
+              :chart-data="bigLineChart.chartData"
+              :extra-options="bigLineChart.extraOptions"
+            >
+            </line-chart>
+          </card>
+        </b-col>
       </b-row>
     </b-container>
 
@@ -95,14 +111,37 @@
   </div>
 </template>
 <script>
+// Charts
+import * as chartConfigs from '@/components/Charts/config';
+import LineChart from '@/components/Charts/LineChart';
+import BarChart from '@/components/Charts/BarChart';
 import { mapState, mapActions, mapMutations } from "vuex";
 const houseStore = "houseStore";
 
 export default {
+  components: {
+    LineChart,
+    BarChart,
+  },
   data() {
     return {
+      bigLineChart: {
+        activeIndex: 0,
+        chartData: {
+          datasets: [
+            {
+              label: '거래 금액',
+              data: [],
+            }
+          ],
+          labels: [],
+        },
+        extraOptions: chartConfigs.blueChartOptions,
+      },
+      housechart: [],
       sidoCode: null,
       gugunCode: null,
+      house: null,
       map: null,
       center: null,
       level: 3,
@@ -137,6 +176,7 @@ export default {
     // this.$store.commit("houseStore/SET_SIDO", null, { root: true });
   },
   mounted() {
+    // this.initBigChart(0);
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
@@ -343,26 +383,40 @@ export default {
         console.log(this.markers);
       }
     },
-    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+    // 마커 클릭 시 실행되는 함수(오버레이, 로드뷰, 차트 띄움)
     makeOverListener(map, marker, data) {
       return () => {
-        // infowindow.setPosition(marker.getPosition());
-        // infowindow.setMap(map);
-        // infowindow.open(map, marker);
         this.center = map.getCenter();
         this.level = map.getLevel();
+        this.house = data;
+        this.housechart = [];
+        this.bigLineChart.chartData.labels = [];
+        this.bigLineChart.chartData.datasets[0].data = [];
         console.log(this.center, this.level);
 
         var sum = 0;
-        var cnt = 0;
+        // var cnt = 0;
         this.houses.forEach((house) => {
           if (house.address === data.address) {
-            sum += parseInt(house.거래금액.replace(',', '').trim());
-            cnt++;
+            var price = parseInt(house.거래금액.replace(',', '').trim());
+            this.housechart.push([house.일,price]);
+            sum += price;
+            // cnt++;
           }
         });
-        var avg = parseInt(sum / cnt);
+        var avg = parseInt(sum / this.housechart.length);
         console.log(avg);
+
+        this.housechart.sort((a, b) => {
+          a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
+        });
+
+        console.log(this.housechart)
+
+        this.housechart.forEach((val) => {
+          this.bigLineChart.chartData.labels.push(val[0]+'일');
+          this.bigLineChart.chartData.datasets[0].data.push(val[1]+'만원');
+        });
 
         var content =
           '<div class="wrap">' +
@@ -449,6 +503,19 @@ export default {
 
       this.map.panTo(iwPosition);
     },
+    // initBigChart(index) {
+    //   let chartData = {
+    //     datasets: [
+    //       {
+    //         label: 'Performance',
+    //         data: this.bigLineChart.allData[index]
+    //       }
+    //     ],
+    //     labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    //   };
+    //   this.bigLineChart.chartData = chartData;
+    //   this.bigLineChart.activeIndex = index;
+    // }
   },
 };
 </script>
