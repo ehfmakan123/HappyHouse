@@ -38,7 +38,7 @@ const onlyAuthUser = async (to, from, next) => {
   if (checkUserInfo === null) {
     alert("회원만 이용 가능합니다 :)");
     // next({ name: "SignIn" });
-    router.push({ name: "login" });
+    next({ name: "login" });
   } else {
     console.log("로그인 했다.");
     next();
@@ -68,90 +68,7 @@ const routes = [
   //   name: "Instargram",
   //   component: Instargram,
   // },
-  {
-    path: "/logout",
-    name: "Logout",
-    beforeEnter: onClickLogout,
-    component: DashboardLayout,
-  },
-  {
-    path: "/user",
-    name: "Member",
-    component: Member,
-
-    children: [
-      {
-        path: "singin",
-        name: "SignIn",
-        component: MemberLogin,
-      },
-      {
-        path: "singup",
-        name: "SignUp",
-        component: MemberJoin,
-      },
-      {
-        path: "mypage",
-        name: "MyPage",
-        beforeEnter: onlyAuthUser,
-        component: MemberMyPage,
-      },
-      {
-        path: "list",
-        name: "MemberList",
-        component: MemberList,
-      },
-      {
-        path: "update/:userid",
-        name: "MemberUpdate",
-        beforeEnter: onlyAuthUser,
-        component: MemberUpdate,
-      },
-      {
-        path: "update/:userid",
-        name: "MemberModify",
-        beforeEnter: onlyAuthUser,
-        component: MemberModify,
-      },
-      {
-        path: "detail/:userid",
-        name: "MemberView",
-        beforeEnter: onlyAuthUser,
-        component: MemberView,
-      },
-    ],
-  },
-  {
-    path: "/board",
-    name: "Board",
-    component: Board,
-    redirect: "/board/list",
-    children: [
-      {
-        path: "list",
-        name: "BoardList",
-        component: BoardList,
-      },
-      {
-        path: "write",
-        name: "BoardWrite",
-        beforeEnter: onlyAuthUser,
-        component: BoardWrite,
-      },
-      {
-        path: "detail/:articleno",
-        name: "BoardView",
-        beforeEnter: onlyAuthUser,
-        component: BoardView,
-      },
-      {
-        path: "update/:articleno",
-        name: "BoardUpdate",
-        beforeEnter: onlyAuthUser,
-        component: BoardUpdate,
-      },
-    ],
-  },
+  
   {
     path: "/house",
     name: "House",
@@ -193,7 +110,85 @@ const routes = [
         path: '/tables',
         name: 'tables',
         component: () => import(/* webpackChunkName: "demo" */ '../views/RegularTables.vue')
-      }
+      },
+      {
+        path: "/board",
+        name: "Board",
+        component: Board,
+        redirect: "/board/list",
+        children: [
+          {
+            path: "list",
+            name: "BoardList",
+            component: BoardList,
+          },
+          {
+            path: "write",
+            name: "BoardWrite",
+            beforeEnter: onlyAuthUser,
+            component: BoardWrite,
+          },
+          {
+            path: "detail/:articleno",
+            name: "BoardView",
+            beforeEnter: onlyAuthUser,
+            component: BoardView,
+          },
+          {
+            path: "update/:articleno",
+            name: "BoardUpdate",
+            beforeEnter: onlyAuthUser,
+            component: BoardUpdate,
+          },
+        ],
+      },
+      {
+        path: "/user",
+        name: "Member",
+        component: Member,
+    
+        children: [
+          {
+            path: "singin",
+            name: "SignIn",
+            component: MemberLogin,
+          },
+          {
+            path: "singup",
+            name: "SignUp",
+            component: MemberJoin,
+          },
+          {
+            path: "mypage",
+            name: "MyPage",
+            beforeEnter: onlyAuthUser,
+            component: MemberMyPage,
+          },
+          {
+            path: "list",
+            name: "MemberList",
+            component: MemberList,
+          },
+          {
+            path: "update/:userid",
+            name: "MemberUpdate",
+            beforeEnter: onlyAuthUser,
+            component: MemberUpdate,
+          },
+          {
+            path: "update/:userid",
+            name: "MemberModify",
+            beforeEnter: onlyAuthUser,
+            component: MemberModify,
+          },
+          {
+            path: "detail/:userid",
+            name: "MemberView",
+            beforeEnter: onlyAuthUser,
+            component: MemberView,
+          },
+        ],
+      },
     ]
   },
   {

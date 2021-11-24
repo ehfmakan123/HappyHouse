@@ -1,36 +1,37 @@
 <template>
   <div id="app">
-    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
-      <!-- Card stats -->
+    
+      <base-header class="bg-image pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
+        <!-- Card stats -->
 
-      <b-row class="mt-4 mb-4 text-center">
-        <b-col class="sm-3 h1"> 원하는 지역의 매물 정보를 찾아보세요! </b-col>
-      </b-row>
-      <b-row class="mt-4 mb-4 text-center">
-        <!-- <b-col class="sm-3">
-          <b-form-input
-            v-model.trim="dongCode"
-            placeholder="동코드 입력...(예 : 11110)"
-            @keypress.enter="sendKeyword"
-          ></b-form-input>
-        </b-col>
-        <b-col class="sm-3" align="left">
-          <b-button variant="outline-primary" @click="sendKeyword">검색</b-button>
-        </b-col> -->
-        <b-col class="sm-3">
-          <b-form-select
-            v-model="sidoCode"
-            :options="sidos"
-          ></b-form-select>
-        </b-col>
-        <b-col class="sm-3">
-          <b-form-select
-            v-model="gugunCode"
-            :options="guguns"
-          ></b-form-select>
-        </b-col>
-      </b-row>
-    </base-header>
+        <b-row class="mt-4 mb-4 text-center">
+          <b-col class="sm-3 h1 text-black"> 원하는 지역의 매물 정보를 찾아보세요! </b-col>
+        </b-row>
+        <b-row class="mt-4 mb-4 text-center">
+          <!-- <b-col class="sm-3">
+            <b-form-input
+              v-model.trim="dongCode"
+              placeholder="동코드 입력...(예 : 11110)"
+              @keypress.enter="sendKeyword"
+            ></b-form-input>
+          </b-col>
+          <b-col class="sm-3" align="left">
+            <b-button variant="outline-primary" @click="sendKeyword">검색</b-button>
+          </b-col> -->
+          <b-col class="sm-3">
+            <b-form-select
+              v-model="sidoCode"
+              :options="sidos"
+            ></b-form-select>
+          </b-col>
+          <b-col class="sm-3">
+            <b-form-select
+              v-model="gugunCode"
+              :options="guguns"
+            ></b-form-select>
+          </b-col>
+        </b-row>
+      </base-header>
 
     <b-container fluid class="mt--7">
       <b-row>
@@ -183,8 +184,8 @@ export default {
   },
   initMap() {
     const container = document.getElementById("map-custom");
-    container.style.width = `90%`;
-    container.style.height = `500px`;
+    // container.style.width = `90%`;
+    // container.style.height = `500px`;
     const options = {
       center: new kakao.maps.LatLng(37.566826, 126.9786567),
       level: 3,
@@ -362,3 +363,27 @@ export default {
   },
 };
 </script>
+<style scoped>
+.bg-image {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  z-index: -1;
+}
+
+.bg-image::after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-image: url("/assets/house.png");
+  position: absolute;
+  opacity: 0.7;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-size: cover; 
+  background-position: center top;
+}
+
+</style>

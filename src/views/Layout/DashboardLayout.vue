@@ -49,7 +49,7 @@
         <sidebar-item v-if="isLogin"
                   :link="{
                     name: 'Logout',
-                    path: '/logout',
+                    path: '/',
                     icon: 'ni ni-key-25 text-info'
                   }">
         </sidebar-item>
