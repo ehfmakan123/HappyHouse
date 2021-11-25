@@ -91,7 +91,8 @@
         </b-row>
         <br/>
       <!-- <button class="btn btn-info" >Edit profile</button>  -->
-      <button type="submit" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
+      <button v-if="ismodify" @click="ismodify=false;" class="btn btn-info">취소</button>
+      <button type="submit" class="btn btn-info">수정하기</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
       <hr class="my-4" />
       </div>
     </b-form>
@@ -139,7 +140,13 @@ export default {
         );
         this.ismodify = false;
       } else {
-        this.ismodify = true;
+        var inputpwd = prompt("비밀번호를 입력하세요.");
+        if (!inputpwd) return;
+        if (inputpwd == this.userInfo.userpwd) {
+          this.ismodify = true;
+        } else {
+          alert('비밀번호가 일치하지 않습니다!');
+        }
       }
     },
   },
