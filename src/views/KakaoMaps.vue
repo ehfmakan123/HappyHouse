@@ -402,13 +402,13 @@ export default {
         console.log(this.center, this.level);
 
         var sum = 0;
-        // var cnt = 0;
+        var size = 0;
         this.houses.forEach((house) => {
           if (house.address === data.address) {
             var price = parseInt(house.거래금액.replace(',', '').trim());
             this.housechart.push([house.일,price]);
             sum += price;
-            // cnt++;
+            size += house.전용면적;
           }
         });
         var avg = parseInt(sum / this.housechart.length);
@@ -441,10 +441,10 @@ export default {
         '건축년도 : ' + data.건축년도 + ' 년' + 
           "            </div>" +
           '            <div class="desc">' +
-        '전용면적 : ' + data.전용면적 + ' m2' + 
+        '평균 전용면적 : ' + data.전용면적/this.housechart.length + ' m2' + 
           "            </div>" +
           '            <div class="desc">' +
-        '평수 : ' + data.전용면적*0.3025 + ' 평' +
+        '평균 평수 : ' + data.전용면적*0.3025/this.housechart.length + ' 평' +
           "            </div>" +
           "        </div>" +
           "    </div>" +

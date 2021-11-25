@@ -134,6 +134,9 @@ export default {
           let msg = "비밀번호 찾기 도중 문제가 발생했습니다.";
           if (data === "fail") {
             alert('일치하는 회원 정보가 없습니다!');
+            // this.userid = "";
+            // this.username = "";
+            // this.email = "";
           } else {
             msg = "이메일로 비밀번호 전송하였습니다";
             try {
