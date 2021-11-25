@@ -106,7 +106,7 @@ export default {
       try {
         emailjs.sendForm(
           "HappyHouse",
-          "template_92xfmzn",
+          "template_whi57v8",
           e.target,
           "user_xXq7X8YXK6mZeeYLZsN6n"
         );
