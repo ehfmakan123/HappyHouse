@@ -37,13 +37,6 @@
                 }">
         </sidebar-item>
 
-        <sidebar-item v-if="userInfo != null"
-              :link="{
-                name: 'My Page',
-                path: '/profile',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item>
 
         <sidebar-item 
               :link="{
@@ -52,14 +45,22 @@
                 icon: 'ni ni-air-baloon text-purple'
                 }">
         </sidebar-item>
-
+        
+        <sidebar-item v-if="userInfo != null"
+              :link="{
+                name: 'My Page',
+                path: '/profile',
+                icon: 'ni ni-single-02 text-yellow'
+                }">
+        </sidebar-item>
+<!-- 
         <sidebar-item v-if="userInfo != null && userInfo.userid == 'admin'"
               :link="{
                 name: 'Send Email (admin)',
                 path: '/subscribe',
                 icon: 'ni ni-email-83 text-green'
                 }">
-        </sidebar-item>
+        </sidebar-item> -->
 
         <!-- <sidebar-item v-if="isLogin" @click="onClickLogout" value="Logout" icon='ni ni-key-25 text-info'/> -->
         <b-nav-item v-if="userInfo != null" @click="setLogout" href="#" icon="ni ni-key-25 text-info"><b-icon icon="unlock-fill"></b-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</b-nav-item>
