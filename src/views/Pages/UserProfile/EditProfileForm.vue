@@ -6,7 +6,11 @@
       </b-col>
     </b-row>
 
-    <b-form>
+    <validation-observer
+      v-slot="{ handleSubmit }"
+      ref="formValidator"
+    >
+    <b-form ref="form" @submit.prevent="handleSubmit(updateProfile)">
       <h6 class="heading-small text-muted mb-4">User information</h6>
       <br />
       <!-- 수정 모드가 아닐때 (ismodify = false 모드 )-->
@@ -32,6 +36,8 @@
               label="Email"
               placeholder="example@email.com"
               v-model="userInfo.email"
+              name="Email"
+              :rules="{ required: true, email: true }"
             >
             </base-input>
           </b-col>
@@ -52,6 +58,8 @@
               label="UserName"
               placeholder="UserName"
               v-model="userInfo.username"
+              name="UserName"
+              :rules="{ required: true }"
             >
             </base-input>
           </b-col>
@@ -68,10 +76,12 @@
         <b-row> <!-- 수정 모드일때 (ismodify = true 모드 )-->
           <b-col lg="6" v-if="ismodify">
             <base-input
-              type="text"
+              type="password"
               label="PassWord"
               placeholder="PassWord"
               v-model="userInfo.userpwd"
+              name="PassWord"
+              :rules="{ required: true, min: 6 }"
             >
             </base-input>
           </b-col>
@@ -81,11 +91,12 @@
         </b-row>
         <br/>
       <!-- <button class="btn btn-info" >Edit profile</button>  -->
-      <button  v-if="ismodify" @click="updateProfile" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
+      <button  v-if="ismodify" type="submit" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
       <button v-else @click="changeToModify" class="btn btn-info">Edit profile</button>  <!-- idmodify ture(수정모드) submit! -->
       <hr class="my-4" />
       </div>
     </b-form>
+    </validation-observer>
   </card>
 </template>
 
