@@ -99,6 +99,6 @@ export default {
 } */
 
 .bg2{
-  background-color: rgb(15, 11, 41);
+  background-color: rgb(25, 22, 46);
 }
 </style>
