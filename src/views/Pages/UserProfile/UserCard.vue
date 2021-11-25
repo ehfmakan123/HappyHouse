@@ -4,7 +4,7 @@
       <b-col lg="3" class="order-lg-2">
         <div class="card-profile-image">
           <a href="#">
-            <b-img src="img/theme/team-4.jpg" rounded="circle" />
+            <b-img src="https://cdn.maily.so/p6wefegm4wzha7wktoaf2rwvo9i0" rounded="circle" />
           </a>
         </div>
       </b-col>

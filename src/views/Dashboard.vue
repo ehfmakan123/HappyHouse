@@ -9,7 +9,6 @@
       id="carousel-1"
       v-model="slide"
       :interval="4000"
-      controls
       indicators
       background="#ababab"
       img-width="1024"
@@ -27,7 +26,7 @@
 
       <!-- Slides with custom text -->
       <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-        <h1>Hello world!</h1>
+        <h1 class="text-white">Haapy House에 오신 걸 환영합니다.</h1>
       </b-carousel-slide>
 
       <!-- Slides with image only -->
@@ -48,12 +47,12 @@
       </b-carousel-slide>
 
       <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+      <!-- <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
           a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
         </p>
-      </b-carousel-slide>
+      </b-carousel-slide> -->
     </b-carousel>
     <br/><br/><br/><br/><br/><br/>
     <!--Charts-->

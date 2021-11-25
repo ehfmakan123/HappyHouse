@@ -2,7 +2,7 @@
 
 <div id="app">
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
-        style="min-height: 600px; background-image: url(https://picsum.photos/1024/400/?image=41); background-size: cover; background-position: center top;">
+        style="min-height: 600px; background-image: url(https://png.pngtree.com/illustrations/20190321/ourlarge/pngtree-programmer-cartoon-jobs-computer-png-image_33663.jpg); background-size: cover; background-position: center top;">
       <b-container fluid>
         <!-- Mask -->
         <span class="mask bg-gradient-primary opacity-8"></span>
@@ -27,7 +27,7 @@
       <b-col lg="3" class="order-lg-2">
         <div class="card-profile-image">
           <a href="#">
-            <b-img src="img/theme/team-4.jpg" rounded="circle" />
+            <b-img src="/assets/여자.PNG" rounded="circle" />
           </a>
         </div>
       </b-col>
@@ -65,7 +65,7 @@
       <b-col lg="3" class="order-lg-2">
         <div class="card-profile-image">
           <a href="#">
-            <b-img src="img/theme/team-4.jpg" rounded="circle" />
+            <b-img src="/assets/남자.PNG" rounded="circle" />
           </a>
         </div>
       </b-col>
