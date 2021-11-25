@@ -1,65 +1,150 @@
 <template>
   <div id="app">
-    
-      <base-header class="bg-image pb-6 pb-8 pt-5 pt-md-8">
-        <!-- Card stats -->
-
-        <b-row class="mt-4 mb-4 text-center">
-          <b-col class="sm-3 h1" style="font-family: fantasy;font-weight: bold;color:white;"> 원하는 지역의 매물 정보를 찾아보세요! </b-col>
-        </b-row>
-        <b-row class="mt-4 mb-4 text-center">
-          <b-col class="sm-3">
-            <b-form-select
-              v-model="sidoCode"
-              :options="sidos"
-              @change="gugunList()"
-            ></b-form-select>
-          </b-col>
-          <b-col class="sm-3">
-            <b-form-select
-              v-model="gugunCode"
-              :options="guguns"
-              @change="aptList()"
-            ></b-form-select>
-          </b-col>
-        </b-row>
-      </base-header>
+    <base-header class="bg-image pb-6 pb-8 pt-5 pt-md-8">
+      <br/><br/>
+      <!-- Card stats -->
+      <!-- <b-modal id="aptModal" v-model="isShow" size="lg" title="아파트 상세보기">modal content</b-modal> -->
+      <b-row class="mt-4 mb-4 text-center">
+        <b-col
+          class="sm-3 h1"
+          style="font-family: fantasy; font-weight: bold; color: white"
+        >
+          원하는 지역의 매물 정보를 찾아보세요!
+        </b-col>
+      </b-row>
+      <br/><br/>
+      <b-row class="mt-4 mb-4 text-center">
+        <b-col class="sm-3">
+          <b-form-select
+            v-model="sidoCode"
+            :options="sidos"
+            @change="gugunList()"
+          ></b-form-select>
+        </b-col>
+        <b-col class="sm-3">
+          <b-form-select
+            v-model="gugunCode"
+            :options="guguns"
+            @change="aptList()"
+          ></b-form-select>
+        </b-col>
+      </b-row>
+    </base-header>
 
     <b-container fluid class="mt--7">
       <b-row>
         <b-col>
           <b-card no-body class="border-0">
             <div id="map-custom" class="map-canvas" style="height: 600px"></div>
+            <!-- <div class="category">
+              <ul>
+                <li id="coffeeMenu" @click="changeMarker('coffee')">
+                  <span class="ico_comm ico_coffee"></span>
+                  커피숍
+                </li>
+                <li id="storeMenu" @click="changeMarker('store')">
+                  <span class="ico_comm ico_store"></span>
+                  편의점
+                </li>
+                <li id="carparkMenu" @click="changeMarker('carpark')">
+                  <span class="ico_comm ico_carpark"></span>
+                  주차장
+                </li>
+              </ul>
+            </div> -->
           </b-card>
         </b-col>
       </b-row>
+      <br /><br />
+
+      <b-row>
+        <!-- <b-col>
+          <stats-card title="Total traffic"
+                      type="gradient-red"
+                      sub-title="350,897"
+                      icon="ni ni-active-40"
+                      class="mb-4">
+
+            <template slot="footer">
+              <span class="text-success mr-2">3.48%</span>
+              <span class="text-nowrap">Since last month</span>
+            </template>
+          </stats-card>
+        </b-col> -->
+        <b-col><div id="roadview" style="width: 100%; height: 480px"></div></b-col>
+        <b-col xl="5" v-if="house != null && housechart.length > 1">
+          <card type="default" header-classes="bg-transparent">
+            <b-row align-v="center" slot="header">
+              <b-col>
+                <h5 class="text-light text-uppercase ls-1 mb-1">거래가 변화 추이</h5>
+                <h5 id="aptname" class="h3 text-white mb-0">{{house.아파트}}</h5>
+              </b-col>
+            </b-row>
+            <line-chart
+              :height="350"
+              ref="bigChart"
+              :chart-data="bigLineChart.chartData"
+              :extra-options="bigLineChart.extraOptions"
+            >
+            </line-chart>
+          </card>
+        </b-col>
+      </b-row>
     </b-container>
-    
-    <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
+
+    <!-- <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
       <house-list-row
         v-for="(house, index) in houses"
         :key="index"
         :house="house"
-      />
-    </b-container>
+      />row mt-3">
+      <b-row>
+        <b-col><b-alert show>주택 목록이 없습니다.</b-alert></b-col>
+      </b-row>
+    </b-container> -->
+    <!-- </b-container>
     <b-container v-else class="bv-example-row mt-3">
       <b-row>
         <b-col><b-alert show>주택 목록이 없습니다.</b-alert></b-col>
       </b-row>
-    </b-container>
+    </b-container> -->
   </div>
 </template>
 <script>
+// Charts
+import * as chartConfigs from '@/components/Charts/config';
+import LineChart from '@/components/Charts/LineChart';
+import BarChart from '@/components/Charts/BarChart';
 import { mapState, mapActions, mapMutations } from "vuex";
-import { sidoname, gugunname } from "@/api/house";
 const houseStore = "houseStore";
 
 export default {
+  components: {
+    LineChart,
+    BarChart,
+  },
   data() {
     return {
+      bigLineChart: {
+        activeIndex: 0,
+        chartData: {
+          datasets: [
+            {
+              label: '거래 금액',
+              data: [],
+            }
+          ],
+          labels: [],
+        },
+        extraOptions: chartConfigs.blueChartOptions,
+      },
+      housechart: [],
       sidoCode: null,
       gugunCode: null,
+      house: null,
       map: null,
+      center: null,
+      level: 3,
       markers: [],
       infowindow: null,
       // sido: null,
@@ -69,6 +154,7 @@ export default {
       coffeeMarkers: [], // 커피숍 마커 객체를 가지고 있을 배열입니다
       storeMarkers: [], // 편의점 마커 객체를 가지고 있을 배열입니다
       carparkMarkers: [], // 주차장 마커 객체를 가지고 있을 배열입니다
+      // isShow: false,
     };
   },
   computed: {
@@ -80,20 +166,20 @@ export default {
   created() {
     // this.$store.dispatch("getSido");
     // this.sidoList();
-    console.log(this.sido, 'created sido');
+    console.log(this.sido, "created sido");
     this.$store.commit("houseStore/SET_HOUSE_LIST", [], { root: true });
     this.$store.commit("houseStore/SET_DETAIL_HOUSE", null, { root: true });
     // this.$store.commit("houseStore/SET_SIDO", null, { root: true });
     this.CLEAR_SIDO_LIST();
     this.getSido();
     console.log(this.sidos, "sidos");
-    this.$store.commit("houseStore/SET_SIDO", null, { root: true });
+    // this.$store.commit("houseStore/SET_SIDO", null, { root: true });
   },
   mounted() {
+    // this.initBigChart(0);
     if (window.kakao && window.kakao.maps) {
       this.initMap();
-    }
-    else {
+    } else {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap());
@@ -115,7 +201,7 @@ export default {
     //   this.aptList();
     // },
     houses(val) {
-      if (this.houses.length > 0) {
+      if (this.houses != undefined && this.houses != null && this.houses.length > 0) {
         console.log("지도 watch 호출");
         this.displayMarker(val);
       }
@@ -145,21 +231,21 @@ export default {
       this.$store.commit("houseStore/SET_GUGUN", null, { root: true });
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
-      console.log(this.sido,'135 sido');
-      sidoname(
-        {sidoCode:this.sidoCode},
-        ({ data }) => {
-          console.log(data, 'data');
-          this.$store.commit("houseStore/SET_SIDO", data, { root: true });
-          this.sido = data;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      this.getSidoName(this.sidoCode);
+      // sidoname(
+      //   { sidoCode: this.sidoCode },
+      //   ({ data }) => {
+      //     console.log(data, "data");
+      //     this.$store.commit("houseStore/SET_SIDO", data, { root: true });
+      //     this.sido = data;
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   }
+      // );
       // this.sido = val;
 
-      console.log(this.sido, 'sido');
+      console.log(this.sido, "sido");
     },
     // this.sido(this.sidoCode);
     aptList() {
@@ -181,7 +267,7 @@ export default {
       console.log(this.houses);
     },
     initMap() {
-      console.log('initMap');
+      console.log("initMap");
       const container = document.getElementById("map-custom");
       // container.style.width = `90%`;
       // container.style.height = `500px`;
@@ -221,6 +307,11 @@ export default {
         // 마커 이미지의 이미지 주소입니다
         var imageSrc =
           "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        // 마커 이미지의 이미지 크기 입니다
+        var imageSize = new kakao.maps.Size(24, 35);
+
+        // 마커 이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
         var geocoder = new kakao.maps.services.Geocoder();
         var bounds = new kakao.maps.LatLngBounds();
@@ -247,11 +338,6 @@ export default {
               // console.log(coords);
               bounds.extend(coords);
 
-              // 마커 이미지의 이미지 크기 입니다
-              var imageSize = new kakao.maps.Size(24, 35);
-
-              // 마커 이미지를 생성합니다
-              var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
               // console.log(i + " : " + mark["아파트"]);
               // 결과값으로 받은 위치를 마커로 표시합니다
@@ -274,16 +360,16 @@ export default {
               //   content: iwContent,
               //   removable: iwRemoveable,
               // });
-              var content = this.setContent(mark);
-              var infoBox = new kakao.maps.CustomOverlay({
-                content: content,
-                position: coords,
-              }); //커스텀 오버레이 생성
+              // var content = this.setContent(mark);
+              // var infoBox = new kakao.maps.CustomOverlay({
+              //   content: content,
+              //   position: coords,
+              // }); //커스텀 오버레이 생성
 
               kakao.maps.event.addListener(
                 marker,
                 "click",
-                this.makeOverListener(this.map, marker, infoBox)
+                this.makeOverListener(this.map, marker, mark)
               );
               // kakao.maps.event.addListener(
               //   marker,
@@ -297,37 +383,94 @@ export default {
         console.log(this.markers);
       }
     },
-    setContent(data) {
-      var content =
-        '<div class="wrap">' +
-        '    <div class="info">' +
-        '        <div class="title">' +
-        data["아파트"] +
-        '            <div class="close" @click="closeOverlay()" title="닫기"></div>' +
-        "        </div>" +
-        '        <div class="body">' +
-        '            <div class="img">' +
-        '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-        "           </div>" +
-        '            <div class="desc">' +
-        '                <div class="ellipsis">' +
-        data.address +
-        "</div>" +
-        '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
-        '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
-        "            </div>" +
-        "        </div>" +
-        "    </div>" +
-        "</div>";
-      return content;
-    },
+    // 마커 클릭 시 실행되는 함수(오버레이, 로드뷰, 차트 띄움)
+    makeOverListener(map, marker, data) {
+      return () => {
+        this.center = map.getCenter();
+        this.level = map.getLevel();
+        this.house = data;
+        this.housechart = [];
+        this.bigLineChart.chartData.labels = [];
+        this.bigLineChart.chartData.datasets[0].data = [];
+        console.log(this.center, this.level);
 
-    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
-    makeOverListener(map, marker, infowindow) {
-      return function () {
-        infowindow.setPosition(marker.getPosition());
-        infowindow.setMap(map);
-        // infowindow.open(map, marker);
+        var sum = 0;
+        // var cnt = 0;
+        this.houses.forEach((house) => {
+          if (house.address === data.address) {
+            var price = parseInt(house.거래금액.replace(',', '').trim());
+            this.housechart.push([house.일,price]);
+            sum += price;
+            // cnt++;
+          }
+        });
+        var avg = parseInt(sum / this.housechart.length);
+        console.log(avg);
+
+        this.housechart.sort((a, b) => {
+          a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
+        });
+
+        console.log(this.housechart)
+
+        this.housechart.forEach((val) => {
+          this.bigLineChart.chartData.labels.push(val[0]+'일');
+          this.bigLineChart.chartData.datasets[0].data.push(val[1]+'만원');
+        });
+
+        var content =
+          '<div class="wrap">' +
+          '    <div class="info">' +
+        '        <div class="title">' +
+        '<span>' + data["아파트"] + '</span><span>' + '<b-button class="title" style="z-index:100;" size="sm"><b-icon icon="heart-fill" font-scale="1" variant="danger"></b-icon></b-button></span>' +
+          '        <div class="body">' +
+          '            <div class="desc">' +
+        data.address +
+          "            </div>" +
+          '            <div class="desc">' +
+        '평균 거래가 : ' + avg + '만원' + 
+          "            </div>" +
+          '            <div class="desc">' +
+        '건축년도 : ' + data.건축년도 + '년' + 
+          "            </div>" +
+          "        </div>" +
+          "    </div>" +
+          "</div>";
+        // // 커스텀 오버레이가 표시될 위치입니다
+        // var position = new kakao.maps.LatLng(33.450701, 126.570667);
+
+        // 커스텀 오버레이를 생성합니다
+        var overlay = new kakao.maps.CustomOverlay({
+          position: marker.getPosition(),
+          map: map,
+          content: content,
+        });
+
+        overlay.setMap(map);
+
+        kakao.maps.event.addListener(map, "click", function () {
+          overlay.setMap(null);
+          // map.setCenter(this.center);
+          map.setLevel(this.level);
+        });
+        // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다
+        function closeOverlay() {
+          overlay.setMap(null);
+        }
+
+        var rvcontainer = document.getElementById("roadview");
+        // var tag = `<b-modal id="aptModal" v-model="isShow" size="lg" title="아파트 상세보기">modal content</b-modal>`;
+        var rv = new kakao.maps.Roadview(rvcontainer);
+        var rc = new kakao.maps.RoadviewClient();
+        var rvResetValue = {};
+        rc.getNearestPanoId(marker.getPosition(), 100, (panoId) => {
+          rv.setPanoId(panoId, marker.getPosition()); //좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
+          rvResetValue.panoId = panoId;
+        });
+        // this.isShow = true;
+        // console.log(this.isShow, "roadview");
+        map.setLevel(3);
+        map.setCenter(marker.getPosition());
       };
     },
 
@@ -360,10 +503,91 @@ export default {
 
       this.map.panTo(iwPosition);
     },
+    // initBigChart(index) {
+    //   let chartData = {
+    //     datasets: [
+    //       {
+    //         label: 'Performance',
+    //         data: this.bigLineChart.allData[index]
+    //       }
+    //     ],
+    //     labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    //   };
+    //   this.bigLineChart.chartData = chartData;
+    //   this.bigLineChart.activeIndex = index;
+    // }
   },
 };
 </script>
-<style scoped>
+
+<style>
+#map {
+  width: 600px;
+  height: 600px;
+}
+
+.button-group {
+  margin: 10px 0px;
+}
+
+button {
+  margin: 0 3px;
+}
+#map_wrap {
+  position: relative;
+  overflow: hidden;
+}
+.category * {
+  margin: 0;
+  padding: 0;
+  color: #000;
+}
+.category {
+  position: absolute;
+  overflow: hidden;
+  top: 0px;
+  left: 0px;
+  width: 155px;
+  height: 50px;
+  z-index: 10;
+  border: 1px solid black;
+  font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+  font-size: 12px;
+  text-align: center;
+  background-color: darkseagreen;
+}
+.category .menu_selected {
+  background: #ff5f4a;
+  color: #fff;
+  border-left: 1px solid #915b2f;
+  border-right: 1px solid #915b2f;
+  margin: 0 -1px;
+}
+.category li {
+  list-style: none;
+  float: left;
+  width: 50px;
+  height: 45px;
+  padding-top: 5px;
+  cursor: pointer;
+}
+.category .ico_comm {
+  display: block;
+  margin: 0 auto 0px;
+  width: 22px;
+  height: 25px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png")
+    no-repeat;
+}
+.category .ico_coffee {
+  background-position: -10px 0;
+}
+.category .ico_store {
+  background-position: -10px -36px;
+}
+.category .ico_carpark {
+  background-position: -10px -72px;
+}
 .bg-image {
   width: 100%;
   height: 100%;
@@ -382,8 +606,90 @@ export default {
   top: 0;
   left: 0;
   z-index: -1;
-  background-size: cover; 
+  background-size: cover;
   background-position: center top;
 }
-
+.wrap {
+  /* position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left; */
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -144px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  line-height: 1.5;
+}
+.wrap * {
+  padding: 0;
+  margin: 0;
+}
+.wrap .info {
+  /* z-index: 100; */
+  width: 286px;
+  height: 130px;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+/* .wrap .info:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+} */
+.info .title {
+  padding: 5px 0 0 10px;
+  height: 35px;
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+}
+.info .body {
+  padding: 10px 0 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.info .desc {
+  /* position: relative;
+  height: 75px; */
+  font-size: 16px;
+}
+.desc .ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.desc .jibun {
+  font-size: 11px;
+  color: #888;
+  margin-top: -2px;
+}
+.info .img {
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  width: 73px;
+  height: 71px;
+  border: 1px solid #ddd;
+  color: #888;
+  overflow: hidden;
+}
+.info:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: 0;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+.info .link {
+  color: #5085bb;
+}
 </style>
