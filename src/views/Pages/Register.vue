@@ -62,7 +62,7 @@
                 v-slot="{ handleSubmit }"
                 ref="formValidator"
               >
-                <form
+                <b-form
                   id="sendf"
                   ref="form"
                   @submit.prevent="handleSubmit(onSubmit)"
@@ -81,6 +81,7 @@
 
                   <base-input
                     alternative
+                    type="text"
                     class="mb-3"
                     prepend-icon="ni ni-hat-3"
                     placeholder="Name"
@@ -92,6 +93,8 @@
 
                   <base-input
                     alternative
+                    type="email"
+                    id="email"
                     class="mb-3"
                     prepend-icon="ni ni-email-83"
                     placeholder="Email"
@@ -134,7 +137,7 @@
                       >Create account</b-button
                     >
                   </div>
-                </form>
+                </b-form>
               </validation-observer>
             </b-card-body>
           </b-card>
@@ -148,11 +151,7 @@ import { mapState } from "vuex";
 import { joinMember, idCheck } from "@/api/member";
 import emailjs from "emailjs-com";
 const memberStore = "memberStore";
-// const templateParams = {
-//   userid: document.getElementById("userid"),
-//   email: document.getElementById("email"),
-//   message: null,
-// };
+
 
 export default {
   name: "register",
@@ -169,7 +168,7 @@ export default {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    onSubmit(e) {
+    onSubmit() {
       // this will be called only after form is valid. You can do an api call here to register users
       idCheck(
         this.userid,
@@ -182,20 +181,37 @@ export default {
                 userpwd: this.userpwd,
                 email: this.email,
               },
+
               ({ data }) => {
-                try {
-                  emailjs.sendForm(
-                    "HappyHouse",
-                    "template_92xfmzn",
-                    e.target,
-                    "user_xXq7X8YXK6mZeeYLZsN6n"
-                  );
-                } catch (error) {
-                  console.log({ error });
-                }
                 let msg = "회원가입시 문제가 발생했습니다.";
                 if (data === "success") {
                   msg = "회원가입이 완료되었습니다.";
+                  console.log(this.email);
+                  console.log(this.$refs.form);
+                    
+                  try {
+                    var formData = this.$refs.form;
+                    var emailel = document.createElement('input');
+                    emailel.type="email";
+                    emailel.name="email";
+                    emailel.value=this.email;
+                    var nameel = document.createElement('input');
+                    nameel.type="name";
+                    nameel.name="name";
+                    nameel.value=this.username;
+                    formData.appendChild(emailel);
+                    formData.appendChild(nameel);
+
+                    emailjs.sendForm(
+                      "HappyHouse",
+                      "template_92xfmzn",
+                      formData,
+                      "user_xXq7X8YXK6mZeeYLZsN6n"
+                    );
+                    // console.log(e.target);
+                  } catch (error) {
+                    console.log({ error });
+                  }
                   alert(msg);
                   this.$router.push({ name: "login" });
                 }
@@ -216,6 +232,10 @@ export default {
         }
       );
     },
+    // check() {
+    //   if (idCheck(this.userid) == 0) return true;
+    //   else false;
+    // }
   },
 };
 </script>
