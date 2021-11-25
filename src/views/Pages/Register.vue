@@ -136,6 +136,9 @@
                     <b-button type="submit" variant="primary" class="mt-4"
                       >Create account</b-button
                     >
+                    <b-button type="submit" variant="primary" class="mt-4"
+                      >Create account</b-button
+                    >
                   </div>
                 </b-form>
               </validation-observer>

@@ -4,7 +4,10 @@
       <b-col lg="3" class="order-lg-2">
         <div class="card-profile-image">
           <a href="#">
-            <b-img src="https://cdn.maily.so/p6wefegm4wzha7wktoaf2rwvo9i0" rounded="circle" />
+            <b-img
+              src="https://cdn.maily.so/p6wefegm4wzha7wktoaf2rwvo9i0"
+              rounded="circle"
+            />
           </a>
         </div>
       </b-col>
@@ -18,16 +21,21 @@
     </b-card-header>
     <b-card-body class="pt-0">
       <div class="text-center">
-        <div class="h3 font-weight-300">
-          <br /><br /><br /><br />
+        <div class="h3 font-weight-1000">
+          <br /><br /><br />
           <i class="ni location_pin mr-2"></i>{{ userInfo.userid }}
         </div>
+        <div><i class="ni education_hat mr-2"></i>{{ userInfo.username }}</div>
         <div class="h3 mt-4">
           <i class="ni business_briefcase-24 mr-2"></i>{{ userInfo.email }}
         </div>
-        <div><i class="ni education_hat mr-2"></i>{{ userInfo.username }}</div>
         <hr class="my-4" />
-        <div><i class="ni education_hat mr-2"></i>{{ userInfo.joindate }}에 가입 하셨습니다</div>
+        <div>
+          <i class="ni education_hat mr-2"></i>
+          <p>Join Date</p>
+          {{ userInfo.joindate }}
+        </div>
+        <br /><br />
         <a href="#">Go Top</a>
       </div>
     </b-card-body>
