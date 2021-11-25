@@ -1,5 +1,5 @@
 <template>
- <b-card no-body class="card-profile" alt="Image placeholder" img-top>
+  <b-card no-body class="card-profile" alt="Image placeholder" img-top>
     <b-row class="justify-content-center">
       <b-col lg="3" class="order-lg-2">
         <div class="card-profile-image">
@@ -12,37 +12,34 @@
 
     <b-card-header class="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
       <div class="d-flex justify-content-between">
-        <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-        <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+        <!-- <a href="#/introduce" class="btn btn-sm btn-info mr-4">Connect</a>
+        <a href="#" class="btn btn-sm btn-default float-right">Message</a> -->
       </div>
     </b-card-header>
     <b-card-body class="pt-0">
       <div class="text-center">
         <div class="h3 font-weight-300">
-          <br/><br/>
-          <i class="ni location_pin mr-2"></i>이름
+          <br /><br /><br /><br />
+          <i class="ni location_pin mr-2"></i>{{ userInfo.userid }}
         </div>
         <div class="h3 mt-4">
-          <i class="ni business_briefcase-24 mr-2"></i>이메일
+          <i class="ni business_briefcase-24 mr-2"></i>{{ userInfo.email }}
         </div>
-        <div><i class="ni education_hat mr-2"></i>desc</div>
+        <div><i class="ni education_hat mr-2"></i>{{ userInfo.username }}</div>
         <hr class="my-4" />
-        <p>
-          Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy
-          — writes, performs and records all of his own music.
-        </p>
+        <div><i class="ni education_hat mr-2"></i>{{ userInfo.joindate }}에 가입 하셨습니다</div>
         <a href="#">Go Top</a>
       </div>
     </b-card-body>
   </b-card>
 </template>
 <script>
-  import { mapState } from "vuex";
-  const memberStore = "memberStore";  
-  export default {
-    computed: {
-      ...mapState(memberStore, ["userInfo"]),
-    },
-  };
+import { mapState } from "vuex";
+const memberStore = "memberStore";
+export default {
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
+};
 </script>
 <style></style>
