@@ -2,11 +2,9 @@
   <card>
     <b-row align-v="center" slot="header" >
       <b-col cols="8">
-        <h3 class="mb-0">Edit profile </h3>
+        <h3 class="mb-0">My profile </h3>
       </b-col>
-      <b-col cols="4" class="text-right">
-        <a href="#!" class="btn btn-sm btn-primary">Settings</a>
-      </b-col>
+      
     </b-row>
 
     <b-form @submit.prevent="updateProfile">
@@ -17,9 +15,9 @@
           <b-col lg="6">
             <base-input
               type="text"
-              label="Username"
-              placeholder="Username"
-              v-model="user.username"
+              label="userid"
+              placeholder="Userid"
+              v-model="user.userid"
             >
             </base-input>
           </b-col>
@@ -120,15 +118,9 @@ export default {
     return {
       user: {
         company: 'Creative Code Inc.',
-        username: 'michael23',
+        userid: '',
         email: '',
-        firstName: 'Mike',
-        lastName: 'Andrew',
-        address: 'Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09',
-        city: 'New York',
-        country: 'USA',
-        postalCode: '',
-        aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`
+        username: '',
       }
     };
   },
