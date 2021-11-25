@@ -1,10 +1,9 @@
 <template>
   <card>
-    <b-row align-v="center" slot="header" >
+    <b-row align-v="center" slot="header">
       <b-col cols="8">
-        <h3 class="mb-0">My profile </h3>
+        <h3 class="mb-0">My profile</h3>
       </b-col>
-      
     </b-row>
 
     <b-form @submit.prevent="updateProfile">
@@ -13,122 +12,55 @@
       <div class="pl-lg-4">
         <b-row>
           <b-col lg="6">
-            <base-input
-              type="text"
-              label="userid"
-              placeholder="Userid"
-              v-model="user.userid"
-            >
+            <base-input type="text" label="UserID" aria-disabled
+              ><b-iocn class="ni ni-circle-08" />&nbsp;&nbsp;&nbsp; {{ userInfo.userid }}
             </base-input>
           </b-col>
           <b-col lg="6">
-            <base-input
-              type="email"
-              label="Email address"
-              placeholder="mike@email.com"
-              v-model="user.email"
-            >
-            </base-input>
-          </b-col>
-        </b-row>
-        <b-row >
-          <b-col lg="6">
-            <base-input
-              type="text"
-              label="First Name"
-              placeholder="First Name"
-              v-model="user.firstName"
-            >
-            </base-input>
-          </b-col>
-          <b-col lg="6">
-            <base-input
-              type="text"
-              label="Last Name"
-              placeholder="Last Name"
-              v-model="user.lastName"
-            >
-            </base-input>
-          </b-col>
-        </b-row>
-      </div>
-      <hr class="my-4">
-
-      <!-- Address -->
-      <h6 class="heading-small text-muted mb-4">Contact information</h6>
-
-      <div class="pl-lg-4">
-        <b-row>
-          <b-col md="12">
-            <base-input
-              type="text"
-              label="Address"
-              placeholder="Home Address"
-              v-model="user.address"
-            >
+            <base-input type="text" label="Email" aria-disabled
+              ><b-iocn class="ni ni-email-83" />&nbsp;&nbsp;&nbsp; {{ userInfo.email }}
             </base-input>
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="4">
-            <base-input
-              type="text"
-              label="City"
-              placeholder="City"
-              v-model="user.city"
-            >
+          <b-col lg="6">
+            <base-input type="text" label="UserName" aria-disabled
+              ><b-iocn class="ni ni-hat-3" />&nbsp;&nbsp;&nbsp; {{ userInfo.username }}
             </base-input>
           </b-col>
-          <b-col lg="4">
-            <base-input
-              type="text"
-              label="Country"
-              placeholder="Country"
-              v-model="user.country"
-            >
-            </base-input>
-          </b-col>
-          <b-col lg="4">
-            <base-input
-              label="Postal Code"
-              placeholder="ZIP Code"
-              v-model="user.postalCode"
-            >
+         <b-col lg="6">
+            <base-input type="text" label="Join Date" aria-disabled
+              ><b-iocn class="ni ni-time-alarm" />&nbsp;&nbsp;&nbsp; {{ userInfo.joindate }}
             </base-input>
           </b-col>
         </b-row>
       </div>
-
-      <hr class="my-4">
-      <!-- Description -->
-      <h6 class="heading-small text-muted mb-4">About me</h6>
-      <div class="pl-lg-4">
-        <b-form-group label="About Me" label-class="form-control-label" class="mb-0" label-for="about-form-textaria">
-         <!--  <label class="form-control-label">About Me</label> -->
-          <b-form-textarea rows="4" value="A beautiful premium dashboard for BootstrapVue." id="about-form-textaria" placeholder="A few words about you ..."></b-form-textarea>
-        </b-form-group>
-      </div>
-
+      <hr class="my-4" />
     </b-form>
   </card>
 </template>
 <script>
+import { mapState } from "vuex";
+const memberStore = "memberStore";
 export default {
   data() {
     return {
       user: {
-        company: 'Creative Code Inc.',
-        userid: '',
-        email: '',
-        username: '',
-      }
+        company: "Creative Code Inc.",
+        userid: "",
+        email: "",
+        username: "",
+      },
     };
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     updateProfile() {
-      alert('Your data: ' + JSON.stringify(this.user));
-    }
-  }
+      alert("Your data: " + JSON.stringify(this.user));
+    },
+  },
 };
 </script>
 <style></style>
