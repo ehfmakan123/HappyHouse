@@ -34,18 +34,16 @@
       <!-- Table -->
       <b-row class="justify-content-center">
         <b-col lg="6" md="8">
-          <b-card no-body class="bg-primary border-3">
-          <div class="text-center"></div>
-            <div class="container" align="center">
-              <br />
-              <div class="text-white">
-              Send mail
+          <b-card no-body class="bg-secondary border-0">
+            <b-card-body class="px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <large>Send Mail</large>
               </div>
-              <br />
-              <b-card class="t1">
-                <b-form ref="form" @submit.prevent="sendEmail" class="bg">
+              <validation-observer ref="formValidator">
+                <b-form ref="form" @submit.prevent="sendEmail">
                   <label>ID</label>
-                  <input
+                  <base-input
+                    alternative
                     class="mb-3"
                     prepend-icon="ni ni-circle-08"
                     type="text"
@@ -54,7 +52,7 @@
                     placeholder="Receiving ID"
                   />
                   <label>Email</label>
-                  <input
+                  <base-input
                     class="mb-3"
                     prepend-icon="ni ni-email-83"
                     type="email"
@@ -63,24 +61,26 @@
                     placeholder="Email"
                   />
                   <label>Message</label>
-                  <textarea
+                  <base-input
                     name="message"
+                    type="textarea"
                     v-model="message"
+                    prepend-icon="ni ni-collection"
                     cols="30"
                     rows="5"
                     placeholder="Message"
-                  >
-                  </textarea>
+                  />
                   <br /><br />
-                   <b-button type="submit" variant="info" class="mt-4"
-                      >Send</b-button
-                    >
+                  <b-button type="submit" variant="info" class="mt-4"
+                    >Send</b-button
+                  >
                   <br />
                 </b-form>
-              </b-card>
-            </div>
-            <br /><br /><br />
+              </validation-observer>
+            </b-card-body>
           </b-card>
+
+          <br /><br /><br />
         </b-col>
       </b-row>
     </b-container>
@@ -103,28 +103,26 @@ export default {
   methods: {
     sendEmail(e) {
       if (confirm("메일을 발송 하시겠습니까?")) {
-      try {
-        emailjs.sendForm(
-          "HappyHouse",
-          "template_whi57v8",
-          e.target,
-          "user_xXq7X8YXK6mZeeYLZsN6n"
-        );
-        console.log(e.target);
-        alert("메일이 발송 되었습니다.")
-      } catch (error) {
-        console.log({ error });
-      }
-      // Reset form field
-      this.name = "";
-      this.email = "";
-      this.message = "";
+        try {
+          emailjs.sendForm(
+            "HappyHouse",
+            "template_whi57v8",
+            e.target,
+            "user_xXq7X8YXK6mZeeYLZsN6n"
+          );
+          console.log(e.target);
+          alert("메일이 발송 되었습니다.");
+        } catch (error) {
+          console.log({ error });
+        }
+        // Reset form field
+        this.name = "";
+        this.email = "";
+        this.message = "";
       }
     },
-  }
+  },
 };
 </script>
 
-<style scope="this api replaced by slot-scope in 2.5.0+">
-
-</style>
+<style></style>
