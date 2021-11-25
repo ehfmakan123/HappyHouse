@@ -45,6 +45,14 @@
                 }">
         </sidebar-item>
 
+        <sidebar-item 
+              :link="{
+                name: 'Introduce',
+                path: '/introduce',
+                icon: 'ni ni-air-baloon text-purple'
+                }">
+        </sidebar-item>
+
         <sidebar-item v-if="userInfo != null && userInfo.userid == 'admin'"
               :link="{
                 name: 'Send Email (admin)',
