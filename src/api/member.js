@@ -48,6 +48,22 @@ async function getMember(userid, success, fail) {
   await api.get(`/user/info/${userid}`).then(success).catch(fail);
 }
 
+async function deleteLike(likeid, success, fail) {
+  await api.delete(`/user/like/delete/${likeid}`).then(success).catch(fail);
+}
+
+async function listLike(userid, success, fail) {
+  await api.get(`/user/like/${userid}`).then(success).catch(fail);
+}
+
+async function insertLike(likeInfo, success, fail) {
+  await api.post(`/user/like/insert`, JSON.stringify(likeInfo)).then(success).catch(fail);
+}
+
+async function aptLikeCheck(likeInfo, success, fail) {
+  await api.get(`/user/like/${likeInfo.userid}/${likeInfo.aptaddress}`).then(success).catch(fail);
+}
+
 // function logout(success, fail)
 
 export {
@@ -60,4 +76,8 @@ export {
   modifyMember,
   joinMember,
   getMember,
+  listLike,
+  insertLike,
+  deleteLike,
+  aptLikeCheck
 };
