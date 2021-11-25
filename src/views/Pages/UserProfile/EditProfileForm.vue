@@ -6,7 +6,7 @@
       </b-col>
     </b-row>
 
-    <b-form @submit.prevent="updateProfile">
+    <b-form @submit.prevent="updateProfile" >
       <h6 class="heading-small text-muted mb-4">User information</h6>
       <br />
       <!-- 수정 모드가 아닐때 (ismodify = false 모드 )-->
@@ -80,16 +80,21 @@
           </b-col>
         </b-row>
         <br/>
-      <button class="btn btn-info">Edit profile</button> 
-      <!-- <button @click="modifyform" class="btn btn-info">Edit profile</button>  클릭하면 modifyform 함수를 사용해서 idmodify를 true로  -->
-      </div>
+      <!-- <button class="btn btn-info" >Edit profile</button>  -->
+      <button  v-if="!ismodify" @click="modifyform" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
+      <button v-if="ismodify" type="submit" class="btn btn-info">Edit profile</button>  <!-- idmodify ture(수정모드) submit! -->
       <hr class="my-4" />
+      </div>
     </b-form>
   </card>
 </template>
+
 <script>
+
+
 import { mapState } from "vuex";
 const memberStore = "memberStore";
+import { modifyMember } from "@/api/member";
 export default {
   data() {
     return {
@@ -110,15 +115,35 @@ export default {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    updateProfile() {
-      alert("Your data: " + JSON.stringify(this.user));
+    updateProfile(){
+    modifyMember(
+      {
+          username: this.userInfo.username,
+          email: this.userInfo.email,
+          userpwd: this.userInfo.userpwd,
+        },
+        ({ data }) => {
+          let msg = "수정 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "수정이 완료되었습니다.";
+          }
+          alert(msg);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     },
+
+
     modifyform(){ //?????
       ismodify = true;
       console.log(this.ismodify);
       this.$router.go();
-    }
+    },
   },
-};
+}
 </script>
+
+
 <style></style>
