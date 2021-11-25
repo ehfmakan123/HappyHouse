@@ -6,7 +6,7 @@
       </b-col>
     </b-row>
 
-    <b-form @submit.prevent="updateProfile" >
+    <b-form>
       <h6 class="heading-small text-muted mb-4">User information</h6>
       <br />
       <!-- 수정 모드가 아닐때 (ismodify = false 모드 )-->
@@ -31,7 +31,7 @@
               type="Email"
               label="Email"
               placeholder="example@email.com"
-              v-model="user.email"
+              v-model="userInfo.email"
             >
             </base-input>
           </b-col>
@@ -51,7 +51,7 @@
               type="text"
               label="UserName"
               placeholder="UserName"
-              v-model="user.username"
+              v-model="userInfo.username"
             >
             </base-input>
           </b-col>
@@ -81,8 +81,8 @@
         </b-row>
         <br/>
       <!-- <button class="btn btn-info" >Edit profile</button>  -->
-      <button  v-if="!ismodify" @click="modifyform" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
-      <button v-if="ismodify" type="submit" class="btn btn-info">Edit profile</button>  <!-- idmodify ture(수정모드) submit! -->
+      <button  v-if="ismodify" @click="updateProfile" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
+      <button v-else @click="changeToModify" class="btn btn-info">Edit profile</button>  <!-- idmodify ture(수정모드) submit! -->
       <hr class="my-4" />
       </div>
     </b-form>
@@ -98,26 +98,22 @@ import { modifyMember } from "@/api/member";
 export default {
   data() {
     return {
-      user: {
-        company: "Creative Code Inc.",
-        userid: "",
-        email: "",
-        username: "",
-        ismodify : true,
-        userpwd:"",
-      },
+      ismodify : false,
     };
   },
   mounted:{
-    ismodify :true 
+    ismodify :false 
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    updateProfile(){
-    modifyMember(
-      {
+    updateProfile() {
+      console.log("updateProfile 호출");
+      console.log(this.ismodify);
+      modifyMember(
+        {
+          userid: this.userInfo.userid,
           username: this.userInfo.username,
           email: this.userInfo.email,
           userpwd: this.userInfo.userpwd,
@@ -133,13 +129,12 @@ export default {
           console.log(error);
         }
       );
+      this.ismodify = false;
     },
-
-
-    modifyform(){ //?????
-      ismodify = true;
+    changeToModify() {
+      console.log("changeToModify 호출");
       console.log(this.ismodify);
-      this.$router.go();
+      this.ismodify = true;
     },
   },
 }
