@@ -56,7 +56,7 @@
     </b-carousel>
     <br/><br/><br/><br/><br/><br/>
     <!--Charts-->
-    <b-container fluid class="mt--7">
+    <!-- <b-container fluid class="mt--7">
       <b-row>
         <b-col xl="8" class="mb-5 mb-xl-0">
           <card type="default" header-classes="bg-transparent">
@@ -114,9 +114,7 @@
           </card>
         </b-col>
       </b-row>
-      <!-- End charts-->
 
-      <!--Tables-->
       <b-row class="mt-5">
         <b-col xl="8" class="mb-5 mb-xl-0">
           <page-visits-table></page-visits-table>
@@ -125,8 +123,7 @@
           <social-traffic-table></social-traffic-table>
         </b-col>
       </b-row>
-      <!--End tables-->
-    </b-container>
+    </b-container> -->
 
   </div>
 </template>

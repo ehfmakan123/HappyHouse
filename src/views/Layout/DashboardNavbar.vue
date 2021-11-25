@@ -40,7 +40,7 @@
           </b-input-group>
         </b-form-group> -->
       </b-form>
-      <base-dropdown
+      <base-dropdown v-if="userInfo != null"
         menu-on-right
         class="nav-item"
         tag="li"
@@ -67,11 +67,11 @@
           <b-dropdown-header class="noti-title">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </b-dropdown-header>
-          <b-dropdown-item href="#!">
+          <b-dropdown-item href="#/profile">
             <i class="ni ni-single-02"></i>
             <span>My profile</span>
           </b-dropdown-item>
-          <b-dropdown-item href="#!">
+          <!-- <b-dropdown-item href="#!">
             <i class="ni ni-settings-gear-65"></i>
             <span>Settings</span>
           </b-dropdown-item>
@@ -82,9 +82,9 @@
           <b-dropdown-item href="#!">
             <i class="ni ni-support-16"></i>
             <span>Support</span>
-          </b-dropdown-item>
+          </b-dropdown-item> -->
           <div class="dropdown-divider"></div>
-          <b-dropdown-item href="#">
+          <b-dropdown-item @click="setLogout">
             <!-- dashbouardnavbar에서 setLogout-->
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
@@ -97,7 +97,7 @@
 <script>
 import { CollapseTransition } from "vue2-transitions";
 import { BaseNav, Modal } from "@/components";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 const memberStore = "memberStore";
 
 export default {
@@ -130,6 +130,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
@@ -138,6 +139,15 @@ export default {
     },
     closeDropDown() {
       this.activeNotifications = false;
+    },
+    setLogout() {
+      if (confirm("로그아웃 하시겠습니까?")) {
+        this.isLogin = false;
+        this.SET_IS_LOGIN(false);
+        this.SET_USER_INFO(null);
+        sessionStorage.removeItem("access-token");
+        this.$router.push('dashboard');
+      }
     },
   },
 };

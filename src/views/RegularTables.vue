@@ -43,7 +43,7 @@
     }
   };
 </script>
-<style>
+<style scoped>
 .el-table tr :hover {
   cursor:pointer;
   /* background-color: lightblue; */
@@ -60,10 +60,10 @@
   width: 100%;
   height: 100%;
   content: "";
-  background-image: url("/assets/bg2.jpg");
+  background-image: url(/assets/bg2.PNG);
   min-height: 500px;
   position: absolute;
-  opacity: 0.7;
+  opacity: 0.9;
   top: 0;
   left: 0;
   z-index: -1;

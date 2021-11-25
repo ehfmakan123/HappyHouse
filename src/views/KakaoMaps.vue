@@ -130,7 +130,7 @@ export default {
         chartData: {
           datasets: [
             {
-              label: '거래 금액',
+              label: '거래 금액 (만원 단위)',
               data: [],
             }
           ],
@@ -390,8 +390,15 @@ export default {
         this.level = map.getLevel();
         this.house = data;
         this.housechart = [];
-        this.bigLineChart.chartData.labels = [];
-        this.bigLineChart.chartData.datasets[0].data = [];
+        this.bigLineChart.chartData = {
+          datasets: [
+            {
+              label: '거래 금액 (만원 단위)',
+              data: [],
+            }
+          ],
+          labels: [],
+        };
         console.log(this.center, this.level);
 
         var sum = 0;
@@ -422,16 +429,22 @@ export default {
           '<div class="wrap">' +
           '    <div class="info">' +
         '        <div class="title">' +
-        '<span>' + data["아파트"] + '</span><span>' + '<b-button class="title" style="z-index:100;" size="sm"><b-icon icon="heart-fill" font-scale="1" variant="danger"></b-icon></b-button></span>' +
+        '<b-button style="z-index:100;" size="sm" @click="alert();"><b-icon class="title" icon="heart-fill" font-scale="1" variant="danger"></b-icon>' + data["아파트"] + '</b-button>' +
           '        <div class="body">' +
           '            <div class="desc">' +
         data.address +
           "            </div>" +
           '            <div class="desc">' +
-        '평균 거래가 : ' + avg + '만원' + 
+        '평균 거래가 : ' + avg + ' 만원' + 
           "            </div>" +
           '            <div class="desc">' +
-        '건축년도 : ' + data.건축년도 + '년' + 
+        '건축년도 : ' + data.건축년도 + ' 년' + 
+          "            </div>" +
+          '            <div class="desc">' +
+        '전용면적 : ' + data.전용면적 + ' m2' + 
+          "            </div>" +
+          '            <div class="desc">' +
+        '평수 : ' + data.전용면적*0.3025 + ' 평' +
           "            </div>" +
           "        </div>" +
           "    </div>" +
@@ -444,6 +457,7 @@ export default {
           position: marker.getPosition(),
           map: map,
           content: content,
+          clickable: true,
         });
 
         overlay.setMap(map);
@@ -464,8 +478,12 @@ export default {
         var rc = new kakao.maps.RoadviewClient();
         var rvResetValue = {};
         rc.getNearestPanoId(marker.getPosition(), 100, (panoId) => {
+          if (panoId != null) {
           rv.setPanoId(panoId, marker.getPosition()); //좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
           rvResetValue.panoId = panoId;
+          } else {
+            alert('주변에 확인 가능한 로드뷰 카메라가 없습니다.');
+          }
         });
         // this.isShow = true;
         // console.log(this.isShow, "roadview");
@@ -520,6 +538,29 @@ export default {
 };
 </script>
 
+<style scoped>
+.bg-image {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 0;
+}
+
+.bg-image::after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-image: url(/assets/house.png);
+  position: absolute;
+  opacity: 0.9;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center top;
+}
+</style>
 <style>
 #map {
   width: 600px;
@@ -588,34 +629,13 @@ button {
 .category .ico_carpark {
   background-position: -10px -72px;
 }
-.bg-image {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  position: relative;
-  z-index: 0;
-}
-
-.bg-image::after {
-  width: 100%;
-  height: 100%;
-  content: "";
-  background-image: url("/assets/house.png");
-  position: absolute;
-  opacity: 0.7;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  background-size: cover;
-  background-position: center top;
-}
 .wrap {
   /* position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left; */
   position: absolute;
   left: 0;
   bottom: 40px;
-  width: 288px;
-  height: 132px;
+  width: 350px;
+  height: 170px;
   margin-left: -144px;
   text-align: left;
   overflow: hidden;
@@ -629,8 +649,8 @@ button {
 }
 .wrap .info {
   /* z-index: 100; */
-  width: 286px;
-  height: 130px;
+  width: 350px;
+  height: 170px;
   border-radius: 5px;
   border-bottom: 2px solid #ccc;
   border-right: 1px solid #ccc;
