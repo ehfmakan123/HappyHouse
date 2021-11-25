@@ -122,9 +122,9 @@ export default {
           email: this.userInfo.email,
           userpwd: this.userInfo.userpwd,
         },
-        ({ data }) => {
+        ({ ismodify}) => {
           let msg = "수정 처리시 문제가 발생했습니다.";
-          if (data === "success") {
+          if (ismodify) {
             msg = "수정이 완료되었습니다.";
           }
           alert(msg);
