@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
-        style="min-height: 600px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+        style="min-height: 600px; background-image: url(assets/bg3.jpg); background-size: cover; background-position: center top;">
       <b-container fluid>
         <!-- Mask -->
-        <span class="mask bg-gradient-success opacity-8"></span>
+        <span class="mask bg-gradient-success opacity-5"></span>
         <!-- Header container -->
         <b-container fluid class="d-flex align-items-center">
           <b-row >

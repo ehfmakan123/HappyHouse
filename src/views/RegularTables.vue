@@ -61,6 +61,7 @@
   height: 100%;
   content: "";
   background-image: url("/assets/bg2.jpg");
+  min-height: 500px;
   position: absolute;
   opacity: 0.7;
   top: 0;
