@@ -1,13 +1,10 @@
 <template>
   <div id="app">
-    <div class="header bg-gradient-warning py-7 py-lg-8 pt-lg-9">
+    <div class="bg-image pb-6 pb-8 pt-5 pt-md-8">
       <b-container>
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white"> 게 시 판 </h1>
-              <!-- <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for
-                free.</p> -->
             </b-col>
           </b-row>
         </div>
@@ -27,21 +24,23 @@
           ></polygon>
         </svg>
       </div>
+    </div>   
+     <b-container fluid class="mt--7">
+      <b-row>
+        <b-col>
+          <stats-card sub-title="게시판"
+                      icon="ni ni-bullet-list-67"
+                      class="mb-4">
+          </stats-card>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <light-table/>
+        </b-col>
+      </b-row>
+     </b-container>
     </div>
-    <div class="bg2">
-      <b-container fluid class="mt--7">
-        <b-row> </b-row>
-        <b-row>
-          <b-col>
-            <light-table />
-            <br/><br/><br/><br/>
-          </b-col>
-        </b-row>
-        <!-- <div class="mt-5"></div>
-      <dark-table></dark-table> -->
-      </b-container>
-    </div>
-  </div>
 </template>
 <script>
 import {
@@ -72,9 +71,9 @@ export default {
 <style scoped>
 .el-table tr :hover {
   cursor: pointer;
-  /* background-color: lightblue; */
+  background-color: lightblue;
 }
-/* 
+
 .bg-image {
   width: 100%;
   height: 100%;
@@ -96,9 +95,9 @@ export default {
   z-index: -1;
   background-size: cover;
   background-position: center top;
-} */
-
-.bg2{
-  background-color: rgb(25, 22, 46);
 }
+
+/* .bg2{
+  background-color: rgb(25, 22, 46);
+} */
 </style>

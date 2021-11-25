@@ -48,7 +48,7 @@
                 overflow: hidden;
               "
             ></div>
-            <ul id="category">
+            <!-- <ul id="category">
               <li id="BK9" data-order="0">
                 <span class="category_bg bank"></span>
                 은행
@@ -73,7 +73,7 @@
                 <span class="category_bg store"></span>
                 편의점
               </li>
-            </ul>
+            </ul> -->
           </div>
         </b-col>
       </b-row>
@@ -687,7 +687,7 @@ export default {
         console.log(data.address);
         var content =
           '<div class="placeinfo_wrap"><div class="placeinfo">' +
-          '   <a class="title" href="#" >' +
+          '   <a class="title" >' +
           data.아파트 +
           "</a>" +
           +"    <span>" +

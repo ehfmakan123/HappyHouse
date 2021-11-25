@@ -1,13 +1,10 @@
 <template>
-  <div id="app">
-    <div class="header bg-gradient-info py-7 py-lg-8 pt-lg-9">
+<div id="app">
+    <div class="bg-image pb-6 pb-8 pt-5 pt-md-8">
       <b-container>
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white"> 글 작성 페이지 </h1>
-              <!-- <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for
-                free.</p> -->
             </b-col>
           </b-row>
         </div>
@@ -27,21 +24,23 @@
           ></polygon>
         </svg>
       </div>
+    </div>   
+     <b-container fluid class="mt--7">
+      <b-row>
+        <b-col>
+          <stats-card sub-title="게시판"
+                      icon="ni ni-bullet-list-67"
+                      class="mb-4">
+          </stats-card>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <board-write-form type="register" />
+        </b-col>
+      </b-row>
+     </b-container>
     </div>
-    <div class="bg2">
-      <b-container fluid class="mt--7">
-        <b-row> </b-row>
-        <b-row>
-          <b-col>
-            <board-write-form/>
-            <br/><br/><br/><br/>
-          </b-col>
-        </b-row>
-        <!-- <div class="mt-5"></div>
-      <dark-table></dark-table> -->
-      </b-container>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -55,8 +54,4 @@ export default {
 };
 </script>
 
-<style>
-.bg2{
-  background-color: rgb(27, 25, 37);
-}
-</style>
+<style></style>
