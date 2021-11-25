@@ -62,7 +62,7 @@
                 v-slot="{ handleSubmit }"
                 ref="formValidator"
               >
-                <b-form
+                <form
                   id="sendf"
                   ref="form"
                   @submit.prevent="handleSubmit(onSubmit)"
@@ -134,7 +134,7 @@
                       >Create account</b-button
                     >
                   </div>
-                </b-form>
+                </form>
               </validation-observer>
             </b-card-body>
           </b-card>
@@ -148,7 +148,11 @@ import { mapState } from "vuex";
 import { joinMember, idCheck } from "@/api/member";
 import emailjs from "emailjs-com";
 const memberStore = "memberStore";
-
+// const templateParams = {
+//   userid: document.getElementById("userid"),
+//   email: document.getElementById("email"),
+//   message: null,
+// };
 
 export default {
   name: "register",
@@ -165,7 +169,7 @@ export default {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    onSubmit() {
+    onSubmit(e) {
       // this will be called only after form is valid. You can do an api call here to register users
       idCheck(
         this.userid,
@@ -178,19 +182,20 @@ export default {
                 userpwd: this.userpwd,
                 email: this.email,
               },
-
               ({ data }) => {
+                try {
+                  emailjs.sendForm(
+                    "HappyHouse",
+                    "template_92xfmzn",
+                    e.target,
+                    "user_xXq7X8YXK6mZeeYLZsN6n"
+                  );
+                } catch (error) {
+                  console.log({ error });
+                }
                 let msg = "회원가입시 문제가 발생했습니다.";
                 if (data === "success") {
                   msg = "회원가입이 완료되었습니다.";
-                  console.log(this.email),
-                    console.log("푸앵카래"),
-                    emailjs.sendForm(
-                      "HappyHouse",
-                      "template_92xfmzn",
-                      "#sendf",
-                      "user_xXq7X8YXK6mZeeYLZsN6n"
-                    );
                   alert(msg);
                   this.$router.push({ name: "login" });
                 }
@@ -211,10 +216,6 @@ export default {
         }
       );
     },
-    // check() {
-    //   if (idCheck(this.userid) == 0) return true;
-    //   else false;
-    // }
   },
 };
 </script>
