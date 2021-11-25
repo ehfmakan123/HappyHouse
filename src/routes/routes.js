@@ -142,53 +142,6 @@ const routes = [
           },
         ],
       },
-      {
-        path: "/user",
-        name: "Member",
-        component: Member,
-    
-        children: [
-          {
-            path: "singin",
-            name: "SignIn",
-            component: MemberLogin,
-          },
-          {
-            path: "singup",
-            name: "SignUp",
-            component: MemberJoin,
-          },
-          {
-            path: "mypage",
-            name: "MyPage",
-            beforeEnter: onlyAuthUser,
-            component: MemberMyPage,
-          },
-          {
-            path: "list",
-            name: "MemberList",
-            component: MemberList,
-          },
-          {
-            path: "update/:userid",
-            name: "MemberUpdate",
-            beforeEnter: onlyAuthUser,
-            component: MemberUpdate,
-          },
-          {
-            path: "update/:userid",
-            name: "MemberModify",
-            beforeEnter: onlyAuthUser,
-            component: MemberModify,
-          },
-          {
-            path: "detail/:userid",
-            name: "MemberView",
-            beforeEnter: onlyAuthUser,
-            component: MemberView,
-          },
-        ],
-      },
     ]
   },
 ];

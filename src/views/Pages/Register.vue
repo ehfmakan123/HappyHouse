@@ -74,7 +74,7 @@
                     prepend-icon="ni ni-circle-08"
                     placeholder="ID"
                     name="userid"
-                    :rules="{ required: true }"
+                    :rules="{ required: true, max: 16 }"
                     v-model="userid"
                   >
                   </base-input>
