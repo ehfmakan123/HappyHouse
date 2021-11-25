@@ -19,7 +19,7 @@
         cols="35"
         rows="2"
       ></textarea>
-      <button @click="registComment">등록</button>
+      <button type="button" class="btn btn-success" @click="registComment">등록</button>
     </div>
   </div>
 </template>
