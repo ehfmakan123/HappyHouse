@@ -415,7 +415,7 @@ export default {
 
         this.housechart.forEach((val) => {
           this.bigLineChart.chartData.labels.push(val[0]+'일');
-          this.bigLineChart.chartData.datasets[0].data.push(val[1]+'만원');
+          this.bigLineChart.chartData.datasets[0].data.push(val[1]);
         });
 
         var content =

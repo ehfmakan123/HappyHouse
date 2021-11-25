@@ -50,6 +50,24 @@ const routes = [
     component: DashboardLayout,
     children: [
       {
+        path: '/',
+        redirect: 'login',
+        component: AuthLayout,
+        children: [
+          {
+            path: '/login',
+            name: 'login',
+            component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
+          },
+          {
+            path: '/register',
+            name: 'register',
+            component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
+          },
+          { path: '*', component: NotFound }
+        ]
+      },
+      {
         path: '/dashboard',
         name: 'dashboard',
         // route level code-splitting
@@ -75,6 +93,7 @@ const routes = [
       {
         path: '/maps',
         name: 'maps',
+        beforeEnter: onlyAuthUser,
         component: () => import(/* webpackChunkName: "demo" */ '../views/KakaoMaps.vue')
       },
       {
@@ -167,24 +186,6 @@ const routes = [
       },
     ]
   },
-  {
-    path: '/',
-    redirect: 'login',
-    component: AuthLayout,
-    children: [
-      {
-        path: '/login',
-        name: 'login',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
-      },
-      {
-        path: '/register',
-        name: 'register',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
-      },
-      { path: '*', component: NotFound }
-    ]
-  }
 ];
 
 export default routes;

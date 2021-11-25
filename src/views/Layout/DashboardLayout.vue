@@ -166,6 +166,7 @@
           this.SET_IS_LOGIN(false);
           this.SET_USER_INFO(null);
           sessionStorage.removeItem("access-token");
+          this.$router.push('dashboard');
         }
       },
       // onClickLogout() {
