@@ -35,7 +35,7 @@
               type="Email"
               label="Email"
               placeholder="example@email.com"
-              v-model="userInfo.email"
+              v-model="email"
               name="Email"
               :rules="{ required: true, email: true }"
             >
@@ -57,7 +57,7 @@
               type="text"
               label="UserName"
               placeholder="UserName"
-              v-model="userInfo.username"
+              v-model="username"
               name="UserName"
               :rules="{ required: true }"
             >
@@ -79,7 +79,7 @@
               type="password"
               label="PassWord"
               placeholder="PassWord"
-              v-model="userInfo.userpwd"
+              v-model="userpwd"
               name="PassWord"
               :rules="{ required: true, min: 6 }"
             >
@@ -110,6 +110,10 @@ export default {
   data() {
     return {
       ismodify : false,
+      userid: '',
+      username: '',
+      email: '',
+      userpwd: '',
     };
   },
   computed: {
@@ -123,13 +127,16 @@ export default {
         modifyMember(
           {
             userid: this.userInfo.userid,
-            username: this.userInfo.username,
-            email: this.userInfo.email,
-            userpwd: this.userInfo.userpwd,
+            username: this.username,
+            email: this.email,
+            userpwd: this.userpwd,
           },
           ({ data }) => {
             let msg = "수정 처리시 문제가 발생했습니다.";
             if (data === "success") {
+              this.userInfo.username = this.username;
+              this.userInfo.userpwd = this.userpwd;
+              this.userInfo.email = this.email;
               msg = "수정이 완료되었습니다.";
             }
             alert(msg);
@@ -140,6 +147,10 @@ export default {
         );
         this.ismodify = false;
       } else {
+        this.username = this.userInfo.username;
+        this.email = this.userInfo.email;
+        this.userpwd = this.userInfo.userpwd;
+        this.ismodify = true;
         var inputpwd = prompt("비밀번호를 입력하세요.");
         if (!inputpwd) return;
         if (inputpwd == this.userInfo.userpwd) {
