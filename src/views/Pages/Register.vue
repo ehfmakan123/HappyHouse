@@ -62,14 +62,18 @@
                 v-slot="{ handleSubmit }"
                 ref="formValidator"
               >
-                <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
+                <b-form
+                  id="sendf"
+                  ref="form"
+                  @submit.prevent="handleSubmit(onSubmit)"
+                >
                   <base-input
                     alternative
                     id="userid"
                     class="mb-3"
                     prepend-icon="ni ni-circle-08"
                     placeholder="ID"
-                    name="ID"
+                    name="userid"
                     :rules="{ required: true }"
                     v-model="userid"
                   >
@@ -80,7 +84,7 @@
                     class="mb-3"
                     prepend-icon="ni ni-hat-3"
                     placeholder="Name"
-                    name="Name"
+                    name="name"
                     :rules="{ required: true }"
                     v-model="username"
                   >
@@ -91,7 +95,7 @@
                     class="mb-3"
                     prepend-icon="ni ni-email-83"
                     placeholder="Email"
-                    name="Email"
+                    name="email"
                     :rules="{ required: true, email: true }"
                     v-model="email"
                   >
@@ -142,8 +146,9 @@
 <script>
 import { mapState } from "vuex";
 import { joinMember, idCheck } from "@/api/member";
-
+import emailjs from "emailjs-com";
 const memberStore = "memberStore";
+
 
 export default {
   name: "register",
@@ -162,9 +167,9 @@ export default {
   methods: {
     onSubmit() {
       // this will be called only after form is valid. You can do an api call here to register users
-      idCheck(this.userid,
+      idCheck(
+        this.userid,
         ({ data }) => {
-          console.log(data);
           if (data === 0) {
             joinMember(
               {
@@ -173,13 +178,22 @@ export default {
                 userpwd: this.userpwd,
                 email: this.email,
               },
+
               ({ data }) => {
                 let msg = "회원가입시 문제가 발생했습니다.";
                 if (data === "success") {
                   msg = "회원가입이 완료되었습니다.";
+                  console.log(this.email),
+                    console.log("푸앵카래"),
+                    emailjs.sendForm(
+                      "HappyHouse",
+                      "template_92xfmzn",
+                      "#sendf",
+                      "user_xXq7X8YXK6mZeeYLZsN6n"
+                    );
+                  alert(msg);
+                  this.$router.push({ name: "login" });
                 }
-                alert(msg);
-                this.$router.push({ name: "login" });
               },
               (error) => {
                 console.log(error);
@@ -195,7 +209,8 @@ export default {
         (error) => {
           console.log(error);
         }
-      )},
+      );
+    },
     // check() {
     //   if (idCheck(this.userid) == 0) return true;
     //   else false;
@@ -203,4 +218,5 @@ export default {
   },
 };
 </script>
+
 <style></style>

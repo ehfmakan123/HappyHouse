@@ -45,11 +45,11 @@
                 }">
         </sidebar-item>
 
-        <sidebar-item v-if="userInfo != null"
+        <sidebar-item v-if="userInfo != null && userInfo.userid == 'admin'"
               :link="{
-                name: 'Subscribe',
+                name: 'Send Email (admin)',
                 path: '/subscribe',
-                icon: 'ni ni-favourite-28 text-pink'
+                icon: 'ni ni-email-83 text-green'
                 }">
         </sidebar-item>
 

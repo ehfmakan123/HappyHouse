@@ -84,8 +84,8 @@
             <span>Support</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
-          <b-dropdown-item href="#" @click="setLogout" > 
-            <!-- dashbouardnavbar에서 setLogout 함수 불러와야함-->
+          <b-dropdown-item href="#">
+            <!-- dashbouardnavbar에서 setLogout-->
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
           </b-dropdown-item>

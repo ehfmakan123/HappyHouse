@@ -1,33 +1,40 @@
 <template>
-  <div class="container">
-    <br /><br /><br /><br /><br />
-    <form ref="form" @submit.prevent="sendEmail" class="bg">
-      <label>Name</label>
-      <input type="text" v-model="name" name="name" placeholder="Your Name" />
-      <label>Email</label>
-      <input
-        type="email"
-        v-model="email"
-        name="email"
-        placeholder="Your Email"
-      />
-      <label>Message</label>
-      <textarea
-        name="message"
-        v-model="message"
-        cols="30"
-        rows="5"
-        placeholder="Message"
-      >
-      </textarea>
+  <div class="container" align="center">
+    <br /><br />
+    <br /><br />
+    Send mail
+    <br />
+    <b-card class="t1">
+      <form ref="form" @submit.prevent="sendEmail" class="bg">
+        <label>ID</label>
+        <input
+          type="text"
+          v-model="name"
+          name="name"
+          placeholder="Receiving ID"
+        />
+        <label>Email</label>
+        <input type="email" v-model="email" name="email" placeholder="Email" />
+        <label>Message</label>
+        <textarea
+          name="message"
+          v-model="message"
+          cols="30"
+          rows="5"
+          placeholder="Message"
+        >
+        </textarea>
 
-      <input type="submit" value="Send" />
-    </form>
+        <input type="submit" value="Send" />
+      </form>
+    </b-card>
+    <br /><br /><br /><br />
   </div>
 </template>
 
 <script>
 import emailjs from "emailjs-com";
+
 export default {
   name: "subscribe",
   data() {
@@ -42,14 +49,9 @@ export default {
       try {
         emailjs.sendForm(
           "HappyHouse",
-          "template_whi57v8",
+          "template_92xfmzn",
           e.target,
           "user_xXq7X8YXK6mZeeYLZsN6n",
-          {
-            name: this.name,
-            email: this.email,
-            message: this.message,
-          }
         );
       } catch (error) {
         console.log({ error });
@@ -63,9 +65,18 @@ export default {
 };
 </script>
 
-<style>
+<style scope="this api replaced by slot-scope in 2.5.0+">
 * {
   box-sizing: border-box;
+}
+.container {
+  background-color: darkseagreen;
+}
+
+.t1 {
+  display: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .bg {
   display: auto;
