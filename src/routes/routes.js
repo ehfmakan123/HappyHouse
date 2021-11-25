@@ -50,7 +50,7 @@ const routes = [
     component: DashboardLayout,
     children: [
       {
-        path: '/',
+        path: '/user',
         redirect: 'login',
         component: AuthLayout,
         children: [
