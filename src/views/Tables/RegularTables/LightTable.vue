@@ -34,7 +34,7 @@
                              min-width="240px">
             </el-table-column>
         </el-table>
-        <b-button @click="moveWrite()">게시글 작성</b-button>
+        <b-button type="button" class="btn btn-primary" @click="moveWrite()">게시글 작성</b-button>
 
         <b-card-footer class="py-4 justify-content-end">
             <b-pagination

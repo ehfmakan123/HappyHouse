@@ -105,10 +105,10 @@ export default {
       if (confirm("메일을 발송 하시겠습니까?")) {
         try {
           emailjs.sendForm(
-            "HappyHouse",
-            "template_whi57v8",
+            "HappyHouse2",
+            "template_krtb7gd",
             e.target,
-            "user_xXq7X8YXK6mZeeYLZsN6n"
+            "user_Lgc823DTswKIAXETkb7HJ"
           );
           console.log(e.target);
           alert("메일이 발송 되었습니다.");
