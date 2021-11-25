@@ -28,7 +28,7 @@
         }"
         id="navbar-search-main"
       >
-        <b-form-group class="mb-0">
+        <!-- <b-form-group class="mb-0"> 서치바 주석처리
           <b-input-group class="input-group-alternative input-group-merge">
             <b-form-input placeholder="Search" type="text"> </b-form-input>
 
@@ -38,7 +38,7 @@
               ></span>
             </div>
           </b-input-group>
-        </b-form-group>
+        </b-form-group> -->
       </b-form>
       <base-dropdown
         menu-on-right
