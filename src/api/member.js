@@ -15,6 +15,12 @@ async function findById(userid, success, fail) {
   await api.get(`/user/info/${userid}`).then(success).catch(fail);
 }
 
+async function findpwd(userInfo, success, fail) {
+  await api.post(`user/findpwd`, JSON.stringify(userInfo))
+  .then(success)
+  .catch(fail);
+}
+
 async function deleteMember(userid, success, fail) {
   await api.delete(`/user/info/${userid}`).then(success).catch(fail);
 }
@@ -48,6 +54,7 @@ export {
   login,
   findById,
   idCheck,
+  findpwd,
   deleteMember,
   listMember,
   modifyMember,

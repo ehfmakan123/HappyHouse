@@ -101,7 +101,7 @@
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/dashboard" class="text-light"
+              <router-link to="/findpwd" class="text-light"
                 ><small>Forgot password?</small></router-link
               >
             </b-col>
@@ -114,6 +114,7 @@
         </b-col>
       </b-row>
     </b-container>
+  <br/><br/><br/>
   </div>
 </template>
 <script>

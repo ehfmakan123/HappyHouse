@@ -64,6 +64,11 @@ const routes = [
             name: 'register',
             component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
           },
+          {
+            path: '/findpwd',
+            name: 'findpwd',
+            component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/FindPassword.vue')
+          },
           { path: '*', component: NotFound }
         ]
       },

@@ -204,7 +204,7 @@ export default {
 
                     emailjs.sendForm(
                       "HappyHouse",
-                      "template_92xfmzn",
+                      "template_whi57v8",
                       formData,
                       "user_xXq7X8YXK6mZeeYLZsN6n"
                     );

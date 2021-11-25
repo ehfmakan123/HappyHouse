@@ -79,7 +79,7 @@
         </sidebar-item>
       </template>
 
-      <template slot="links-after">
+      <!-- <template slot="links-after">
         <hr class="my-3">
         <h6 class="navbar-heading p-0 text-muted">Documentation</h6>
 
@@ -99,7 +99,7 @@
               <b-nav-text class="p-0">Components</b-nav-text>
           </b-nav-item>
         </b-nav>
-      </template>
+      </template> -->
     </side-bar>
     <div class="main-content">
       <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
