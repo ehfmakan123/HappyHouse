@@ -46,15 +46,8 @@
           <i class="ni location_pin mr-2"></i>김은지
         </div>
         <div class="h3 mt-4">
-          <i class="ni business_briefcase-24 mr-2"></i>이메일
+          <i class="ni business_briefcase-24 mr-2"></i>a_sldkfj@naver.com
         </div>
-        <div><i class="ni education_hat mr-2"></i>desc</div>
-        <hr class="my-4" />
-        <p>
-          Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy
-          — writes, performs and records all of his own music.
-        </p>
-        <a href="#">Go Top</a>
       </div>
     </b-card-body>
   </b-card>

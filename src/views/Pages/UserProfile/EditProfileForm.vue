@@ -91,8 +91,7 @@
         </b-row>
         <br/>
       <!-- <button class="btn btn-info" >Edit profile</button>  -->
-      <button  v-if="ismodify" type="submit" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
-      <button v-else @click="changeToModify" class="btn btn-info">Edit profile</button>  <!-- idmodify ture(수정모드) submit! -->
+      <button type="submit" class="btn btn-info">Edit profile</button> <!-- ismodify false일때 클릭하면 true 바꿈(modifyform)  -->
       <hr class="my-4" />
       </div>
     </b-form>
@@ -112,40 +111,36 @@ export default {
       ismodify : false,
     };
   },
-  mounted:{
-    ismodify :false 
-  },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     updateProfile() {
-      console.log("updateProfile 호출");
-      console.log(this.ismodify);
-      modifyMember(
-        {
-          userid: this.userInfo.userid,
-          username: this.userInfo.username,
-          email: this.userInfo.email,
-          userpwd: this.userInfo.userpwd,
-        },
-        ({ data }) => {
-          let msg = "수정 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            msg = "수정이 완료되었습니다.";
+      if (this.ismodify) {
+        console.log("updateProfile 호출");
+        console.log(this.ismodify);
+        modifyMember(
+          {
+            userid: this.userInfo.userid,
+            username: this.userInfo.username,
+            email: this.userInfo.email,
+            userpwd: this.userInfo.userpwd,
+          },
+          ({ data }) => {
+            let msg = "수정 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              msg = "수정이 완료되었습니다.";
+            }
+            alert(msg);
+          },
+          (error) => {
+            console.log(error);
           }
-          alert(msg);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-      this.ismodify = false;
-    },
-    changeToModify() {
-      console.log("changeToModify 호출");
-      console.log(this.ismodify);
-      this.ismodify = true;
+        );
+        this.ismodify = false;
+      } else {
+        this.ismodify = true;
+      }
     },
   },
 }
