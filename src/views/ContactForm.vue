@@ -44,6 +44,7 @@ export default {
       message: "",
     };
   },
+
   methods: {
     sendEmail(e) {
       try {
@@ -53,6 +54,7 @@ export default {
           e.target,
           "user_xXq7X8YXK6mZeeYLZsN6n",
         );
+        console.log(e.target);
       } catch (error) {
         console.log({ error });
       }
